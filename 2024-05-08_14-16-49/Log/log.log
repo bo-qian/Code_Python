@@ -1,0 +1,38 @@
+# Phase-field parametersInput
+Alpha: 120.0
+Beta: 0.01
+Kappac: 135.0
+KappaEta: 1.0
+Surface Diffusion: 0.01
+GB Diffusion: 0.01
+Volume Diffusion: 0.01
+Mobility L: 0.01
+Epsilon: 3.01
+
+# Mechanics Parameters
+Surface viscosity: 0.01
+GB viscosity: 0.01
+Bulk viscosity: 0.2667
+Viscosity Ratio: 0.01
+ 
+# Computational Setting
+Particle Radius: 60.0
+Particle Number: 25
+Characteristic time: 2.0
+Dimension X: 720.0
+Dimension Y: 720.0
+NumberOfElement X: 1080
+NumberOfElement Y: 1080
+TimeStep: 0.05
+InitialTime: 0.0
+NumberOfTimeStep: 500
+IntialStepCounter: 0
+FrequencyOutPut: 30
+ 
+# Algorithmic parameters
+theta: 0.5
+ 
+# Normalized Materials Properties
+specfic surface energy: 30.0
+surface thickness: 3.0
+Grain boundary thickness: 11.547005383792516
