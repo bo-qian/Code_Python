@@ -5,8 +5,4 @@
     <orderEntry type="jdk" jdkName="Python 3.12.3 WSL (Ubuntu-24.04): (/home/qianbo/.virtualenvs/Code_Python/bin/python)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
-  <component name="PyDocumentationSettings">
-    <option name="format" value="GOOGLE" />
-    <option name="myDocStringFormat" value="Google" />
-  </component>
 </module>
