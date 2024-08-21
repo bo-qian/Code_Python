@@ -334,8 +334,8 @@ print("the code being executed:", sys.argv)
 python_script_name = os.path.basename(sys.argv[0])
 shutil.copy(python_script_name, os.path.join(Codes_directory, python_script_name))
 # 读取输入文件
-parameters_input = read_input_file("../Template_Sintering/input_template.txt")
-shutil.copy("../Template_Sintering/input_template.txt", os.path.join(Input_directory, "input_template_fenicsx.txt"))
+parameters_input = read_input_file("../Solid-state_Sintering/input_template.txt")
+shutil.copy("../Solid-state_Sintering/input_template.txt", os.path.join(Input_directory, "input_template_fenicsx.txt"))
 
 # 从输入文件中读取参数*******************************************************************************************
 # 相场参数读取

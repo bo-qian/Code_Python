@@ -201,7 +201,7 @@ dt = 1e-02  # origin：5e-03
 # 创建输出文件夹
 # Output file  输出文件
 rootpath = os.path.dirname(os.path.abspath(__file__))
-directory_path = rootpath + "/Template_Sintering"
+directory_path = rootpath + "/Solid-state_Sintering"
 # 获取当前文件夹内的所有内容
 all_contents = os.listdir(directory_path)
 # 过滤出所有的子文件夹
@@ -212,7 +212,7 @@ num_subdirectories = len(subdirectories)
 remark = input("Please enter a remark for the output file: ")
 now = datetime.now()
 filename = 'Test-' + str(num_subdirectories + 1) + '_' + now.strftime("%Y%m%d%H%M%S") + '_(' + remark + ')'
-file = File(rootpath + "/Template_Sintering/" + filename + "/output.pvd", "compressed")
+file = File(rootpath + "/Solid-state_Sintering/" + filename + "/output.pvd", "compressed")
 
 # block with mesh, spaces and weak forms
 # Form compiler options

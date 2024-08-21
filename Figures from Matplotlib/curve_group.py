@@ -141,8 +141,8 @@ def plot_curve_group_comparison(end_curve, path, label, name):
 # plot_curve_group_comparison(
 #     6840,
 #     [
-#         base_path + "/Template_Sintering/PolyParticle_Simulation_cluster/Test-1 (July 01, 2024, 20-26-04)/Data/energy_data.csv",
-#         base_path + "/Template_Sintering/TGG_Simulation_Cluster/TGGSS-43 (July 06, 2024, 16-49-18)/Data/various_data.csv"
+#         base_path + "/Solid-state_Sintering/PolyParticle_Simulation_cluster/Test-1 (July 01, 2024, 20-26-04)/Data/energy_data.csv",
+#         base_path + "/Solid-state_Sintering/TGG_Simulation_Cluster/TGGSS-43 (July 06, 2024, 16-49-18)/Data/various_data.csv"
 #     ],
 #     ["Multi-particle Sintering", "Template Sintering"],
 #     "Multi-particle Sintering vs Template Sintering"
@@ -151,8 +151,8 @@ def plot_curve_group_comparison(end_curve, path, label, name):
 # plot_curve_group_comparison(
 #     None,
 #     [
-#         base_path + "/Template_Sintering/PolyParticle_Simulation_v1/PPSS-V1-12 (July 22, 2024, 15-33-02)/Data/various_data.csv",
-#         base_path + "/Template_Sintering/PolyParticle_Simulation_v1/PPSS-V1-13 (July 22, 2024, 16-03-23)/Data/various_data.csv"
+#         base_path + "/Solid-state_Sintering/PolyParticle_Simulation_v1/PPSS-V1-12 (July 22, 2024, 15-33-02)/Data/various_data.csv",
+#         base_path + "/Solid-state_Sintering/PolyParticle_Simulation_v1/PPSS-V1-13 (July 22, 2024, 16-03-23)/Data/various_data.csv"
 #     ],
 #     [r"$\epsilon=1.0$", r"$\epsilon=0.72$"],
 #     "epsilon=1.0 vs epsilon=0.72"
@@ -161,8 +161,8 @@ def plot_curve_group_comparison(end_curve, path, label, name):
 # plot_curve_group_comparison(
 #     200,
 #     [
-#         base_path + "/Template_Sintering/PolyParticle_Simulation_v1/PPSS-V1-1 (July 11, 2024, 14-58-23)/Data/various_data.csv",
-#         base_path + "/Template_Sintering/PolyParticle_Simulation/PPSS-25 (July 11, 2024, 14-57-43)/Data/various_data.csv"
+#         base_path + "/Solid-state_Sintering/PolyParticle_Simulation_v1/PPSS-V1-1 (July 11, 2024, 14-58-23)/Data/various_data.csv",
+#         base_path + "/Solid-state_Sintering/PolyParticle_Simulation/PPSS-25 (July 11, 2024, 14-57-43)/Data/various_data.csv"
 #     ],
 #     ["With Interruption", "Without Interruption"],
 #     "With Interruption vs Without Interruption"
@@ -211,10 +211,10 @@ def plot_curve_group(name, Data_directory):
         plt.close()
 
 
-# # plot_curve_group("Poly Particle Sintering", base_path + "/Template_Sintering/PolyParticle_Simulation_cluster/Test-6 (June 30, 2024, 20-32-34)/Data/energy_data.csv")
+# # plot_curve_group("Poly Particle Sintering", base_path + "/Solid-state_Sintering/PolyParticle_Simulation_cluster/Test-6 (June 30, 2024, 20-32-34)/Data/energy_data.csv")
 # plot_curve_group("TGG have not fixed - same number of data", base_directory + "/Process/240711第十八次汇报/data_without_fixed_TGG/various_data - 副本.csv")
 # plot_curve_group("TGG have fixed", base_directory + "/Process/240711第十八次汇报/data_with_fixed_TGG/various_data.csv")
-plot_curve_group("Four particles Sintering", base_path + "/Template_Sintering/PolyParticle_Simulation_cluster/PPSS-V1-12 (July 24, 2024, 14-49-39)/Data/various_data.csv")
+plot_curve_group("Four particles Sintering", base_path + "/Solid-state_Sintering/PolyParticle_Simulation_cluster/PPSS-V1-12 (July 24, 2024, 14-49-39)/Data/various_data.csv")
 
 
 def plot_curve(x, y, name, Data_directory):
@@ -251,7 +251,7 @@ def plot_curve(x, y, name, Data_directory):
         plt.close()
 
 
-plot_curve(0, 3, "Four Particles Sintering", base_path + "/Template_Sintering/PolyParticle_Simulation_cluster/PPSS-V1-12 (July 24, 2024, 14-49-39)/Data/various_data.csv")
+plot_curve(0, 3, "Four Particles Sintering", base_path + "/Solid-state_Sintering/PolyParticle_Simulation_cluster/PPSS-V1-12 (July 24, 2024, 14-49-39)/Data/various_data.csv")
 
 
 def plot_three_dimension(r, epsilon, center, name):
