@@ -1,0 +1,26 @@
+#Phase-Field Parameters
+Alpha = 120
+KappaC = 135
+Relaxation Parameter = 0.005
+Epsilon = 3.01
+
+#Mechanics Parameters
+Bulk viscosity = 0.4
+Viscosity Ratio = 0.001
+Characteristic Time = 2
+
+#Computational Settings
+Particle Radius = 25
+Particle Number = 2
+Dimension X = 200
+Dimension Y = 150
+NumberOfElement X = 200
+NumberOfElement Y = 150
+TimeStep = 0.1
+InitialTime = 0.00
+NumberOfTimeStep = 10
+InitialStepCounter = 0
+FrequencyOutPut = 1
+
+# Algorithmic Parameters
+theta = 0.5 

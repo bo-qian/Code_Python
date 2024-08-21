@@ -1,0 +1,6 @@
+arguments: /mnt/d/OneDrive/Science_Research/2.Secondstage_CodeAndData_Python/Code_Python/FeniCSx/demo_cahn-hilliard.py
+Current dir: /mnt/d/OneDrive/Science_Research/2.Secondstage_CodeAndData_Python/Code_Python/FeniCSx
+File verbosity level: 0
+date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
+2024-07-09 20:19:10.365 (   0.393s) [main            ]             loguru.cpp:826   INFO| Logging to 'log.txt', mode: 'w', verbosity: 0
+2024-07-09 20:19:10.563 (   0.592s) [main            ]             loguru.cpp:526   INFO| atexit

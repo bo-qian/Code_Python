@@ -1,0 +1,38 @@
+#Phase-Field Parameters
+Alpha = 12.00
+Beta = 0.7094
+KappaC = 13.5
+KappaEta = 4.7884
+Surface Diffusion = 828.778
+GB Diffusion = 0.0257
+Volume Diffusion = 0.0026
+Mobility L = 0.3467
+Epsilon = 3.01
+Zeta = 0.00
+
+#Mechanics Parameters
+Surface viscosity = 10.00
+Viscosity Ratio = 0.0001
+
+#Computational Settings
+Particle Radius = 25
+Particle Number = 17
+Characteristic Time = 7200
+Dimension X = 500
+Dimension Y = 300
+MeshRatio = 0.5
+NumberOfElement X = 50
+NumberOfElement Y = 30
+AspectRatioOfTemplate = 2
+NumberOfLayer = 2
+TimeStep = 5e-1
+InitialTime = 0.00
+NumberOfTimeStep = 1
+InitialStepCounter = 0
+FrequencyOutPut = 20
+
+# Algorithmic Parameters
+theta = 0.5
+
+# Remark about the job
+Remark = 模拟长径比为10，四层粒子的模板烧结，看看可不可行

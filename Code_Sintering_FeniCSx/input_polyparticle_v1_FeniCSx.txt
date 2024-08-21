@@ -1,0 +1,36 @@
+#Phase-Field Parameters
+Alpha = 12.00
+Beta = 0.7094
+KappaC = 13.5
+KappaEta = 4.7884
+Surface Diffusion = 828.778
+GB Diffusion = 0.0257
+Volume Diffusion = 0.0026
+Mobility L = 0.3467
+Epsilon = 3.01
+Zeta = 0.00
+
+#Mechanics Parameters
+Surface viscosity = 0.00
+GB viscosity = 0.00
+Bulk viscosity = 10.00
+Viscosity Ratio = 0.0001
+
+#Computational Settings
+Particle Radius = 10
+Characteristic Time = 7200
+MeshRatio = 1
+ParticleNumberOfX = 2
+ParticleNumberOfY = 1
+TimeStep = 0.5
+InitialTime = 10
+Job For Continue = PPSS-42 (July 08, 2024, 21-01-59)
+NumberOfTimeStep = 100
+InitialStepCounter = 84
+FrequencyOutPut = 1
+
+# Algorithmic Parameters
+theta = 0.5
+
+# Remark about the job
+Remark = 测试读取功能

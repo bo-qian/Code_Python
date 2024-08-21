@@ -1,0 +1,27 @@
+#Phase-Field Parameters
+Alpha = 120.00
+KappaC = 135.00
+Relaxation Parameter = 0.01
+Epsilon = 3.01
+
+#Mechanics Parameters
+Bulk viscosity = 0.4
+Viscosity Ratio = 0.001
+Characteristic Time = 2
+
+#Computational Settings
+Particle Radius = 30
+MeshRatio = 1
+ParticleNumberOfX = 2
+ParticleNumberOfY = 1
+TimeStep = 0.01
+InitialTime = 0.00
+NumberOfTimeStep = 100
+InitialStepCounter = 0
+FrequencyOutPut = 5
+
+# Algorithmic Parameters
+theta = 0.5
+
+# Remark about the job
+Remark = 粘性烧结代码最终测试，看看总自由能曲线的最终趋势，时间步长为0.01
