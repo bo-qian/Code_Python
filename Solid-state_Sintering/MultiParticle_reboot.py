@@ -106,17 +106,17 @@ class Template(UserExpression):
 
     def to_string_expression(self):
         return '*'.join([
-            f'((1 - tanh((x[0] - {self.center[0]} - {self.dimensions[0]}/2)/(sqrt(2)*epsilon)))/2'
-            f'-(1 - tanh((x[0] - {self.center[0]} + {self.dimensions[0]}/2)/(sqrt(2)*epsilon)))/2)',
-            f'((1 - tanh((x[1] - {self.center[1]} - {self.dimensions[1]}/2)/(sqrt(2)*epsilon)))/2'
-            f'-(1 - tanh((x[1] - {self.center[1]} + {self.dimensions[1]}/2)/(sqrt(2)*epsilon)))/2)'
+            f'((1 - tanh((x[0] - {self.center[0]} - {self.dimensions[0]}/2)/(sqrt(2)*{self.epsilon})))/2'
+            f'-(1 - tanh((x[0] - {self.center[0]} + {self.dimensions[0]}/2)/(sqrt(2)*{self.epsilon})))/2)',
+            f'((1 - tanh((x[1] - {self.center[1]} - {self.dimensions[1]}/2)/(sqrt(2)*{self.epsilon})))/2'
+            f'-(1 - tanh((x[1] - {self.center[1]} + {self.dimensions[1]}/2)/(sqrt(2)*{self.epsilon})))/2)'
         ])
 
 
 # Function of creat particle expression ***********************************************************************
 def circle_string_expression(radius, center):
     return (f"(1 - tanh((sqrt(pow((x[0]-{center[0]}), 2) + pow((x[1]-{center[1]}), 2)) - {radius}) / (sqrt("
-            f"2)*epsilon)))/2")
+            f"2)*{epsilon})))/2")
 
 
 # Function of set governing equation **************************************************************************
@@ -437,7 +437,7 @@ epsilon = thicknessSurfaceNormalized / (2 * np.sqrt(2) * np.arctanh(1 - 2 * omeg
 # Define the output directory *********************************************************************************
 # Creat the output folder
 start_running_time = datetime.datetime.now()
-primary_directory = os.getcwd() + "/PolyParticle_Simulation_v1"
+primary_directory = os.getcwd() + "/MPSS_reboot"
 if not os.path.exists(primary_directory):
     os.makedirs(primary_directory)
 all_contents = os.listdir(primary_directory)
@@ -448,7 +448,7 @@ time_stamp = start_running_time.strftime("%B %d, %Y, %H") + ":" + datetime.datet
 
 timeInitial = counterStepInitial * dt
 if timeInitial == 0:
-    filename = 'PPSS-V1-' + str(num_subdirectories + 1) + ' (' + datetime.datetime.now().strftime(
+    filename = 'MPSS-reboot-' + str(num_subdirectories + 1) + ' (' + datetime.datetime.now().strftime(
         "%B %d, %Y, %H-%M-%S") + ")"
 else:
     filename = str(parameters_input.get("Job For Continue"))

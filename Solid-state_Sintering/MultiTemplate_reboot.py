@@ -13,6 +13,8 @@ import signal
 
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
+from matplotlib.tri import Triangulation
+from mpl_toolkits.axes_grid1 import make_axes_locatable, axes_size
 import matplotlib.patches as patches
 import numpy as np
 import os
@@ -106,17 +108,17 @@ class Template(UserExpression):
 
     def to_string_expression(self):
         return '*'.join([
-            f'((1 - tanh((x[0] - {self.center[0]} - {self.dimensions[0]}/2)/(sqrt(2)*epsilon)))/2'
-            f'-(1 - tanh((x[0] - {self.center[0]} + {self.dimensions[0]}/2)/(sqrt(2)*epsilon)))/2)',
-            f'((1 - tanh((x[1] - {self.center[1]} - {self.dimensions[1]}/2)/(sqrt(2)*epsilon)))/2'
-            f'-(1 - tanh((x[1] - {self.center[1]} + {self.dimensions[1]}/2)/(sqrt(2)*epsilon)))/2)'
+            f'((1 - tanh((x[0] - {self.center[0]} - {self.dimensions[0]}/2)/(sqrt(2)*{self.epsilon})))/2'
+            f'-(1 - tanh((x[0] - {self.center[0]} + {self.dimensions[0]}/2)/(sqrt(2)*{self.epsilon})))/2)',
+            f'((1 - tanh((x[1] - {self.center[1]} - {self.dimensions[1]}/2)/(sqrt(2)*{self.epsilon})))/2'
+            f'-(1 - tanh((x[1] - {self.center[1]} + {self.dimensions[1]}/2)/(sqrt(2)*{self.epsilon})))/2)'
         ])
 
 
 # Function of creat particle expression ***********************************************************************
 def circle_string_expression(radius, center):
     return (f"(1 - tanh((sqrt(pow((x[0]-{center[0]}), 2) + pow((x[1]-{center[1]}), 2)) - {radius}) / (sqrt("
-            f"2)*epsilon)))/2")
+            f"2)*{epsilon})))/2")
 
 
 # Function of set governing equation **************************************************************************
@@ -216,13 +218,13 @@ def signal_handler(sig, frame):
     interrupted = True
 
 # Function to plot figures of phase-field variants *************************************************************
-def plot_function(serial_number, variant, file_directory, time_current):
+def plot_function(variant, file_directory, time_current):
     if not os.path.exists(file_directory):
         os.makedirs(file_directory)
     with plt.rc_context({'font.family': 'serif', 'font.serif': ['Arial'], 'font.weight': 'regular', 'font.size': 24}):
-        plt.figure(serial_number, figsize=(12, 9), dpi=100)
+        plt.subplots(figsize=(12, 9), dpi=100)
         plot(variant, title=f"{variant} at time {time_current}s", cmap='coolwarm')
-        plt.savefig(file_directory + f'/{variant}_{time_current:g}s.png', dpi=100)
+        plt.savefig(file_directory + f'/{variant}_{time_current:g}s.png', dpi=100, bbox_inches='tight')
         plt.close()
 
 
@@ -322,12 +324,66 @@ def initial_schematic(coordinates, radii, domain, ratio):
         plt.close()
 
 
+def plot_function_on_mesh(fenics_function, mesh, time_current, title):
+    file_directory = os.path.join(Figures_directory, title)
+    if not os.path.exists(file_directory):
+        os.makedirs(file_directory)
+    """
+    Visualize a FEniCS function on a triangular mesh with continuous color distribution.
+
+    Parameters:
+    fenics_function (Function): The FEniCS function to visualize.
+    mesh (Mesh): The FEniCS mesh associated with the function.
+    title (str): Title of the plot.
+    cmap (str): Color map to use for visualization.
+    levels (int): Number of levels for contour smoothing.
+    """
+    # 获取网格的顶点和三角形元素
+    coordinates = mesh.coordinates()
+    triangles = mesh.cells()
+
+    # 提取函数在顶点上的值
+    values = fenics_function.compute_vertex_values(mesh)
+    # 获取值的最小值和最大值
+    vmin = values.min()
+    vmax = values.max()
+
+    # 使用matplotlib的Triangulation来绘制三角形网格
+    triang = Triangulation(coordinates[:, 0], coordinates[:, 1], triangles)
+
+    with plt.rc_context({'font.family': 'serif', 'font.serif': ['Arial'], 'font.weight': 'regular', 'font.size': 32}):
+        fig, ax = plt.subplots(figsize=(12, 9), dpi=100)
+
+        ax.set_aspect('equal', 'box')
+        # tric = plt.tricontourf(triang, values, levels=500, cmap='coolwarm')  # 通过增加levels来细化插值
+        tric = plot(fenics_function, title=f"{title} at {time_current:g}s", levels=500, cmap='coolwarm')  # 通过增加levels来细化插值
+
+        # 隐藏坐标轴刻度
+        ax.set_xticks([])
+        ax.set_yticks([])
+        ax.set_xticklabels([])
+        ax.set_yticklabels([])
+
+        divider = make_axes_locatable(plt.gca())
+        width = axes_size.AxesY(ax, aspect=1. / 20)
+        pad = axes_size.Fraction(0.5, width)
+        cax = divider.append_axes("right", size=width, pad=pad)
+        cbar = plt.colorbar(tric, cax=cax)
+        # 设置颜色条的刻度
+        ticks = np.linspace(vmin, vmax, 6)  # 在vmin和vmax之间生成6个均匀分布的值
+        cbar.set_ticks(ticks)
+
+        plt.tight_layout()
+        plt.savefig(file_directory + f'/{title} at {time_current:g}s.png', dpi=100, bbox_inches='tight')
+        plt.close()
+
+
 #############################################################################################################
 # Main Part
 #############################################################################################################
 
 # Read the input file ****************************************************************************************
-parameters_input = read_input_file("input_template_v1.txt")
+parameters_input = read_input_file("input_template_reboot.txt")
 # Phase-field parameters
 a = float(parameters_input.get("Alpha"))
 b = float(parameters_input.get("Beta"))
@@ -360,12 +416,18 @@ theta = float(parameters_input.get("theta"))
 # Remark
 remark = str(parameters_input.get("Remark"))
 
-
+energySurfSpeciNormalized = (sqrt(2 * kc * a) / 6)
+thicknessSurfaceNormalized = sqrt(8 * kc / a)
+thicknessGbNormalized = sqrt(4 * keta / (3 * b))
+# The parameter to control the smoothness
+omega = 0.05  # The parameter to control the smoothness of the particle
+epsilon = thicknessSurfaceNormalized / (2 * np.sqrt(2) * np.arctanh(1 - 2 * omega))
+# epsilon = 1
 
 # Define the output directory *********************************************************************************
 # Creat the output folder
 start_running_time = datetime.datetime.now()
-primary_directory = os.getcwd() + "/TGG_Simulation_v1"
+primary_directory = os.getcwd() + "/TGGSS_reboot"
 if not os.path.exists(primary_directory):
     os.makedirs(primary_directory)
 all_contents = os.listdir(primary_directory)
@@ -376,11 +438,10 @@ time_stamp = start_running_time.strftime("%B %d, %Y, %H") + ":" + datetime.datet
 
 timeInitial = counterStepInitial * dt
 if timeInitial == 0:
-    filename = 'TGGSS-V1-' + str(num_subdirectories + 1) + ' (' + datetime.datetime.now().strftime(
+    filename = 'TGGSS-reboot-' + str(num_subdirectories + 1) + ' (' + datetime.datetime.now().strftime(
         "%B %d, %Y, %H-%M-%S") + ")"
 else:
     filename = str(parameters_input.get("Job For Continue"))
-
 
 output_document_type = ["Log", "Error", "Codes", "Input", "Output", "Figures", "Data"]
 for i in output_document_type:
@@ -425,7 +486,7 @@ denim_reg = lambda x: x if abs(x) > 1e-12 else 1e-12
 print("the code being executed:", sys.argv)
 python_script_name = os.path.basename(sys.argv[0])
 shutil.copy(python_script_name, os.path.join(Codes_directory, python_script_name))
-shutil.copy("input_template_v1.txt", os.path.join(Input_directory, "input_template_v1.txt"))
+shutil.copy("input_template_reboot.txt", os.path.join(Input_directory, "input_template_reboot.txt"))
 
 # Input parameter processing **********************************************************************************
 # Calculate the total number of particles and diameter of particles
@@ -447,7 +508,7 @@ template_particle = Template(degree=1)
 template_particle.set_center([int(domain_size[0] / 2), int(domain_size[1] / 2)])
 template_particle.set_dimensions([aspect_ratio * particle_size, particle_size])
 # Set the epsilon of the template grain
-template_particle.set_epsilon(1)
+template_particle.set_epsilon(epsilon)
 # Calculate the area of the template grain
 area_template = template_particle.dimensions[0] * template_particle.dimensions[1]
 # Obtain the particle centers and radii
@@ -508,14 +569,14 @@ eta_initial = [VoronoiParticle(degree=1) for k in range(pde.Np - 1)] + [template
 for k in range(pde.Np - 1):
     eta_initial[k].others = particle_centers.copy()
     eta_initial[k].center = eta_initial[k].others.pop(k)
-    eta_initial[k].epsilon = 1
+    eta_initial[k].epsilon = epsilon
     eta_initial[k].obstacle = template_particle
 
 # Define initial value of C
 c_initial = Expression(
     '+'.join([circle_string_expression(particle_radii[k], particle_centers[k]) for k in range(pde.Np - 1)]
              + [template_particle.to_string_expression()]),
-    degree=1, epsilon=Constant(template_particle.epsilon))
+    degree=1, epsilon=Constant(epsilon))
 
 # Define initial value of mu
 mu_initial = Constant(0)
@@ -680,23 +741,24 @@ try:
 
         # Set the initial time, counter step and total simulation time *************************************************
         with open(readme_file_path, 'w', encoding='utf-8') as file:
-            file.write(f"####################################################################\n"
-                       f"This is the computing log of phase-field simulation for template grain growth.\n"
-                       f"Operated by Bo Qian at Shanghai University\n"
-                       f"Date: {time_stamp}\n"
-                       f"####################################################################\n\n"
-                       f"\n####################################################################\n"
-                       f"Starting time : {start_running_time.strftime('%B %d, %Y, %H:%M:%S')}"
-                       f"                                                                          Test-{num_subdirectories + 1}\n"
-                       f"**************************************************************************************************\n"
-                       f"Remark : {remark}\n"
-                       f"Time step : {dt}s\n"
-                       f"Number of time steps : {NumberOfTimeStep}\n"
-                       f"Number of mesh element : {ElementNumber[0]}*{ElementNumber[1]}={ElementNumber[0] * ElementNumber[1]}\n"
-                       f"Output frequency : once every {frequencyOutput} time steps\n"
-                       f"The aspect ratio of template : {aspect_ratio}\n"
-                       f"The number of particle : {pde.Np}\n"
-                       f"The volume fraction of template : {volume_fraction_template * 100:.2f}%\n"
+            file.write(
+                f"####################################################################\n"
+                f"This is the computing log of phase-field simulation for template grain growth.\n"
+                f"Operated by Bo Qian at Shanghai University\n"
+                f"Date: {time_stamp}\n"
+                f"####################################################################\n\n"
+                f"\n####################################################################\n"
+                f"Starting time : {start_running_time.strftime('%B %d, %Y, %H:%M:%S')}"
+                f"                                                                          Test-{num_subdirectories + 1}\n"
+                f"**************************************************************************************************\n"
+                f"Remark : {remark}\n"
+                f"Time step : {dt}s\n"
+                f"Number of time steps : {NumberOfTimeStep}\n"
+                f"Number of mesh element : {ElementNumber[0]}*{ElementNumber[1]}={ElementNumber[0] * ElementNumber[1]}\n"
+                f"Output frequency : once every {frequencyOutput} time steps\n"
+                f"The aspect ratio of template : {aspect_ratio}\n"
+                f"The number of particle : {pde.Np}\n"
+                f"The volume fraction of template : {volume_fraction_template * 100:.2f}%\n"
                     )
 
         # Reset initial conditions ************************************************************************************
@@ -776,11 +838,12 @@ try:
 
         print("----- Plotting figures of C, eta, eta_pure, v and stress -----")
         initial_schematic(particle_centers, particle_radii, domain_size, aspect_ratio)
-        plot_function(1, c_wr, os.path.join(Figures_directory, 'C'), timeCurrent)
-        plot_function(2, eta_wr, os.path.join(Figures_directory, 'eta'), timeCurrent)
-        plot_function(3, v_wr, os.path.join(Figures_directory, 'v'), timeCurrent)
-        plot_function(4, stress_wr, os.path.join(Figures_directory, 'stress'), timeCurrent)
-        plot_function(5, eta_pure, os.path.join(Figures_directory, 'eta_pure'), timeCurrent)
+        plot_function_on_mesh(c_wr, mesh, timeCurrent, "C")
+        plot_function_on_mesh(eta_wr, mesh, timeCurrent, "eta")
+        plot_function_on_mesh(eta_pure, mesh, timeCurrent, "eta_pure")
+        plot_function(v_wr, os.path.join(Figures_directory, 'v'), timeCurrent)
+        plot_function(stress_wr, os.path.join(Figures_directory, 'stress'), timeCurrent)
+
 
     else:
         # Write the input parameters to the log file *******************************************************************
@@ -876,7 +939,9 @@ try:
         if interrupted:
             print(
                 f"===== Exiting loop after current iteration at time step {counterStep}. =====\n"
-                f"===== You can continue the simulation at time step {np.floor_divide(counterStep, frequencyOutput) * frequencyOutput} =====")
+                f"===== You can continue the simulation at time step {np.floor_divide(counterStep, frequencyOutput) * frequencyOutput} =====\n"
+                f"===== You can continue the simulation of job {filename} ====="
+            )
             break
 
         counterStep += 1
@@ -924,8 +989,8 @@ try:
 
         if np.mod(counterStep, frequencyOutput) == 0:
 
-            if os.path.exists(Output_directory + f"/checkpoint_{counterStep - 1 - frequencyOutput}.h5") and counterStep != counterStepInitial:
-                os.remove(Output_directory + f"/checkpoint_{counterStep - 1 - frequencyOutput}.h5")
+            if os.path.exists(Output_directory + f"/checkpoint_{counterStep - frequencyOutput}.h5") and counterStep != counterStepInitial:
+                os.remove(Output_directory + f"/checkpoint_{counterStep - frequencyOutput}.h5")
 
             print("----- Outputting checkpoint -----")
             checkpoint_file = HDF5File(MPI.comm_world, Output_directory + f"/checkpoint_{counterStep}.h5", "w")
@@ -942,11 +1007,14 @@ try:
             solve(stress_L == stress_R, stress_wr)
             xdmf_file.write(stress_wr, timeCurrent)
 
-            print("----- Plotting figures of C, eta, eta_pure, v and stress -----")
-            plot_function(6 * quotient + 1, c_wr, os.path.join(Figures_directory, 'C'), timeCurrent)
-            plot_function(6 * quotient + 2, eta_wr, os.path.join(Figures_directory, 'eta'), timeCurrent)
-            plot_function(6 * quotient + 3, v_wr, os.path.join(Figures_directory, 'v'), timeCurrent)
-            plot_function(6 * quotient + 4, stress_wr, os.path.join(Figures_directory, 'stress'), timeCurrent)
+            print("----- Plotting figures of C, eta, eta_pure -----")
+            plot_function_on_mesh(c_wr, mesh, timeCurrent, "C")
+            plot_function_on_mesh(eta_wr, mesh, timeCurrent, "eta")
+
+            print("----- Plotting figures of v and stress -----")
+            initial_schematic(particle_centers, particle_radii, domain_size, aspect_ratio)
+            plot_function(v_wr, os.path.join(Figures_directory, 'v'), timeCurrent)
+            plot_function(stress_wr, os.path.join(Figures_directory, 'stress'), timeCurrent)
 
             print("----- Plotting curve figures of different kind of data -----")
             plot_curve_group(data_curve, name_unit, counterStep, timeCurrent)

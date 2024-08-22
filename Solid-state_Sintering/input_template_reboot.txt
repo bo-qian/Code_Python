@@ -17,19 +17,19 @@ Bulk viscosity = 10.00
 Viscosity Ratio = 0.0001
 
 #Computational Settings
-Particle Radius = 25
+Particle Radius = 15
 Characteristic Time = 7200
 MeshRatio = 1
-AspectRatioOfTemplate = 5
-NumberOfLayer = 2
+AspectRatioOfTemplate = 1
+NumberOfLayer = 1
 TimeStep = 0.5
-Job For Continue = None
-NumberOfTimeStep = 200000
-InitialStepCounter = 0
-FrequencyOutPut = 100
+Job For Continue = TGGSS-reboot-3 (August 22, 2024, 13-39-11)
+NumberOfTimeStep = 120
+InitialStepCounter = 30
+FrequencyOutPut = 5
 
 # Algorithmic Parameters
 theta = 0.5
 
 # Remark about the job
-Remark = 两层长径比为5的模板烧结
+Remark = 测试是否和最新版本的多粒子烧结程序一致

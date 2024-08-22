@@ -353,7 +353,7 @@ def plot_curve_group(data, name, counter_step_current, time_current):
 #############################################################################################################
 
 # Read the input file ****************************************************************************************
-parameters_input = read_input_file("input_polyparticle.txt")
+parameters_input = read_input_file("input_MultiParticle.txt")
 # Phase-field parameters
 a = float(parameters_input.get("Alpha"))
 b = float(parameters_input.get("Beta"))
@@ -390,7 +390,7 @@ remark = str(parameters_input.get("Remark"))
 print("the code being executed:", sys.argv)
 python_script_name = os.path.basename(sys.argv[0])
 shutil.copy(python_script_name, os.path.join(Codes_directory, python_script_name))
-shutil.copy("input_polyparticle.txt", os.path.join(Input_directory, "input_polyparticle.txt"))
+shutil.copy("input_MultiParticle.txt", os.path.join(Input_directory, "input_MultiParticle.txt"))
 
 # Input parameter processing **********************************************************************************
 # Calculate the total number of particles and diameter of particles
