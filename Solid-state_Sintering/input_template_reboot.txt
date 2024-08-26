@@ -24,8 +24,8 @@ AspectRatioOfTemplate = 1
 NumberOfLayer = 1
 TimeStep = 0.5
 Job For Continue = TGGSS-reboot-3 (August 22, 2024, 13-39-11)
-NumberOfTimeStep = 120
-InitialStepCounter = 30
+NumberOfTimeStep = 300
+InitialStepCounter = 120
 FrequencyOutPut = 5
 
 # Algorithmic Parameters

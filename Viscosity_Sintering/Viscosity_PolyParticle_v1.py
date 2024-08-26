@@ -444,17 +444,20 @@ c_mid = (1.0 - theta) * c_prev + theta * c_trial
 
 # Define the weak forms **************************************************************************************
 # The linear weak form of c and mu
-cWeakForm = c_trial * c_test * dx - c_prev * c_test * dx \
+cWeakForm = c_trial * c_test * dx \
+            - c_prev * c_test * dx \
             + dt * dot(pde.M(c_prev) * grad(mu_trial), grad(c_test)) * dx \
             - dt * dot(v_prev * c_trial, grad(c_test)) * dx
-muWeakForm = mu_trial * mu_test * dx - pde.kc * dot(grad(c_mid), grad(mu_test)) * dx \
+muWeakForm = mu_trial * mu_test * dx \
+             - pde.kc * dot(grad(c_mid), grad(mu_test)) * dx \
              - (pde.fmu(c_prev) + pde.c_stabilizer * (c_trial - c_prev)) * mu_test * dx
 CH_WeakFormCombined = cWeakForm + muWeakForm
 CH_WeakFormCombined_L, CH_WeakFormCombined_R = lhs(CH_WeakFormCombined), rhs(CH_WeakFormCombined)
 
 # The weak form of velocity and pressure
-Stokes_WeakFormCombined = inner(pde.sigma(v_trial, c_new), grad(v_test)) * dx + div(
-    v_test) * p_trial * dx + p_test * div(v_trial) * dx \
+Stokes_WeakFormCombined = inner(pde.sigma(v_trial, c_new), grad(v_test)) * dx \
+                          + div(v_test) * p_trial * dx \
+                          + p_test * div(v_trial) * dx \
                           - inner(pde.interface_stress(c_new), grad(v_test)) * dx
 Stokes_WeakFormCombined_L, Stokes_WeakFormCombined_R = lhs(Stokes_WeakFormCombined), rhs(Stokes_WeakFormCombined)
 
@@ -464,7 +467,8 @@ c_auxiliary_L = c_auxiliary * c_auxiliary_test * dx
 stress_test = TestFunction(SpaceTensor)
 stress_trial = TrialFunction(SpaceTensor)
 stress_L = inner(stress_trial, stress_test) * dx
-stress_R = inner(pde.sigma(v_prev, c_new) + p_prev * Identity(2)
+stress_R = inner(pde.sigma(v_prev, c_new) \
+                 + p_prev * Identity(2) \
                  - (0.5 * pde.kc * dot(grad(c_new), grad(c_new)) + pde.f(c_new)) * Identity(2), stress_test) * dx
 
 # Define the weak form of data_curve
