@@ -437,7 +437,7 @@ epsilon = thicknessSurfaceNormalized / (2 * np.sqrt(2) * np.arctanh(1 - 2 * omeg
 # Define the output directory *********************************************************************************
 # Creat the output folder
 start_running_time = datetime.datetime.now()
-primary_directory = os.getcwd() + "/MPSS_reboot"
+primary_directory = os.path.join(os.path.dirname(os.getcwd()), "Output_Files", "MPSS_reboot")
 if not os.path.exists(primary_directory):
     os.makedirs(primary_directory)
 all_contents = os.listdir(primary_directory)

@@ -262,7 +262,7 @@ def initial_schematic(coordinates, radii, domain):
 
 # Read the input file ****************************************************************************************
 # Copy the codes that you are running
-parameters_input = read_input_file("input_polyparticle_viscosity_v1.txt")
+parameters_input = read_input_file("input_MultiParticle_Viscosity_reboot.txt")
 # Phase-field parameters
 a = float(parameters_input.get('Alpha'))
 kc = float(parameters_input.get('KappaC'))
@@ -290,7 +290,7 @@ theta = float(parameters_input.get('theta'))
 # Define the output directory *********************************************************************************
 # Define Output Folder
 start_running_time = datetime.datetime.now()
-primary_directory = os.getcwd() + "/PolyParticle_Viscosity_Simulation_v1"
+primary_directory = os.path.join(os.path.dirname(os.getcwd()), "Output_Files", "MPVS_reboot")
 if not os.path.exists(primary_directory):
     os.makedirs(primary_directory)
 all_contents = os.listdir(primary_directory)
@@ -348,7 +348,7 @@ plt.rcParams.update({
 print("the code being executed:", sys.argv)
 python_script_name = os.path.basename(sys.argv[0])
 shutil.copy(python_script_name, os.path.join(Codes_directory, python_script_name))
-shutil.copy("input_polyparticle_viscosity_v1.txt", os.path.join(Input_directory, "input_polyparticle_viscosity_v1.txt"))
+shutil.copy("input_MultiParticle_Viscosity_reboot.txt", os.path.join(Input_directory, "input_MultiParticle_Viscosity_reboot.txt"))
 
 # Input parameter processing **********************************************************************************
 # Calculate the total number of particles and diameter of particles
