@@ -1,0 +1,5 @@
+# 忽略 .ssh 等文件夹及其所有内容
+.ssh/
+Output_Files/
+Output_Files_Cluster/
+Post_Processing/
