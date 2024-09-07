@@ -3,5 +3,5 @@
   <component name="Black">
     <option name="sdkName" value="Remote Python 3.11.0 (sftp://qianbo@10.0.43.7:22/home/qianbo/Fenics/Code_Python_cluster/bin/python)" />
   </component>
-  <component name="ProjectRootManager" version="2" project-jdk-name="fenicsproject" project-jdk-type="Python SDK" />
+  <component name="ProjectRootManager" version="2" project-jdk-name="fenics-env" project-jdk-type="Python SDK" />
 </project>
