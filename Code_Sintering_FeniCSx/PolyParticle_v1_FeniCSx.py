@@ -28,14 +28,17 @@ from mpi4py import MPI
 from petsc4py import PETSc
 
 from basix.ufl import element, mixed_element
-from dolfinx import default_real_type, log, plot, mesh, cpp
-from dolfinx.fem import Function, functionspace, Expression, DirichletBC, dirichletbc, locate_dofs_geometrical, locate_dofs_topological
+from dolfinx import plot, mesh, cpp, fem
+from dolfinx.fem import Function, functionspace, Expression, dirichletbc, locate_dofs_geometrical, \
+    locate_dofs_topological
 from dolfinx.fem.petsc import NonlinearProblem
 from dolfinx.io import XDMFFile
 from dolfinx.mesh import CellType, create_unit_square, locate_entities_boundary
 from dolfinx.nls.petsc import NewtonSolver
-from ufl import dx, grad, inner, dot, Constant, TestFunction, TrialFunction, SpatialCoordinate, sqrt, outer, split, tanh, lhs, rhs, div, Identity
+from ufl import dx, grad, inner, dot, Constant, SpatialCoordinate, sqrt, outer, split, \
+    tanh, lhs, rhs, div, Identity, TestFunction, TrialFunction
 import ufl
+
 
 #############################################################################################################
 # Function Part
@@ -60,6 +63,7 @@ class VoronoiParticle(Expression):
         self.center = center
         self.others = others
         self.epsilon = epsilon
+        self.mesh = mesh  # Store the mesh for later use
 
         # Define the UFL expression
         if center is not None and others is not None:
@@ -67,26 +71,50 @@ class VoronoiParticle(Expression):
             dx = x[0] - self.center[0]
             dy = x[1] - self.center[1]
 
-            closest_ind = np.argmin([sqrt(pow((x[0] - self.others[k][0]), 2) + pow((x[1] - self.others[k][1]), 2)) for k in range(len(self.others))])
+            # Compute the distance to the closest particle
+            distances = [sqrt(pow(x[0] - self.others[k][0], 2) + pow(x[1] - self.others[k][1], 2))
+                         for k in range(len(self.others))]
+            closest_ind = np.argmin(distances)
             closest = self.others[closest_ind]
             dpx = closest[0] - self.center[0]
             dpy = closest[1] - self.center[1]
             dp = sqrt(pow(dpx, 2) + pow(dpy, 2))
 
-            self.e = (1 + tanh((0.5 * pow(dp, 2) - dx * dpx - dy * dpy) / (sqrt(2) * self.epsilon * dp))) / 2
+            # Define the UFL expression
+            self.ufs_expr = (1 + tanh((0.5 * pow(dp, 2) - dx * dpx - dy * dpy) / (sqrt(2) * self.epsilon * dp))) / 2
 
-            # Prepare points on the reference cell (X argument for Expression)
-            num_points = 1
-            self.X = np.array([[0.0, 0.0]])  # Example: single point at (0, 0)
+            # Prepare points on the reference cell (if needed)
+            self.X = mesh.geometry.x[:, :2]  # Example: mesh points
 
-        super().__init__(self.e, self.X)
-
-    def eval(self, mesh, entities, values=None):
-        return super().eval(mesh, entities, values)
+        # Initialize the base class with a dummy expression (it will be updated)
+        super().__init__(self.ufs_expr, self.X)
 
     @property
     def ufl_expression(self):
-        return self.e
+        return self.ufs_expr
+
+    def eval(self, mesh, entities, values=None):
+        # Compute the value of the expression at the given mesh entities
+        if values is None:
+            values = np.zeros(len(entities), dtype=ScalarType)
+        coords = mesh.geometry.x[entities]
+        for i, coord in enumerate(coords):
+            x = SpatialCoordinate(mesh)
+            dx = coord[0] - self.center[0]
+            dy = coord[1] - self.center[1]
+
+            # Compute the distance to the closest particle
+            distances = [sqrt(pow(coord[0] - self.others[k][0], 2) + pow(coord[1] - self.others[k][1], 2))
+                         for k in range(len(self.others))]
+            closest_ind = np.argmin(distances)
+            closest = self.others[closest_ind]
+            dpx = closest[0] - self.center[0]
+            dpy = closest[1] - self.center[1]
+            dp = sqrt(pow(dpx, 2) + pow(dpy, 2))
+
+            # Compute the expression value
+            values[i] = (1 + tanh((0.5 * pow(dp, 2) - dx * dpx - dy * dpy) / (sqrt(2) * self.epsilon * dp))) / 2
+        return values
 
     # center = [0, 0]
     # other = [[1, 1]]
@@ -160,8 +188,16 @@ class Template(Expression):
 
 # Function of creat particle expression ***********************************************************************
 def circle_string_expression(radius, center, epsilon):
-    return (f"(1 - tanh((sqrt(pow((x[0]-{center[0]}), 2) + pow((x[1]-{center[1]}), 2)) - {radius}) / (sqrt("
-            f"2)*{epsilon})))/2")
+    return f"(1 - tanh((sqrt(pow((X[0] - {center[0]}), 2) + pow((X[1] - {center[1]}), 2)) - {radius}) / (sqrt(2) * {epsilon})))/2"
+
+
+def circle_ufl_expression(radius, center, epsilon, X):
+    return (1 - tanh(
+        (sqrt(pow((X[0] - center[0]), 2) + pow((X[1] - center[1]), 2)) - radius) / (sqrt(2) * epsilon))) / 2
+
+
+def circle_ufl_expression_mu(X):
+    return (X[0] - X[0]) + (X[1] - X[1])
 
 
 # Function of set governing equation **************************************************************************
@@ -216,7 +252,7 @@ class SolidStateSintering:
         return 2 * self.a * C * (1 - C) * (1 - 2 * C)
 
     def S(self, eta):
-        return self.b * (Constant(1)
+        return self.b * (1
                          - 4 * sum([eta[i] ** 3 for i in range(self.Np)])
                          + 3 * sum([eta[i] ** 2 for i in range(self.Np)]) ** 2)
 
@@ -238,11 +274,17 @@ class SolidStateSintering:
     def sigma(self, u, C, eta):
         # for this version it is important to keep viscosity_ratio<1
         # the defined sigma here does not include contribution from Lagrangian multiplier
-        return ((self.viscosity_ratio + (1 - self.viscosity_ratio) * self.N(C)) * self.muBulk + self.muSurf * (C ** 2) * ((1 - C) ** 2) + 2 * self.muGB * self.N(C) * sum([eta[i] ** 2 * (sum([eta[j] ** 2 for j in range(self.Np)]) - eta[i] ** 2) for i in range(self.Np)])) * (grad(u) + grad(u).T)
+        print(f"grad(u): {grad(u)}")
+        print(f"grad(u).T: {grad(u).T}")
+        return (((self.viscosity_ratio + (1 - self.viscosity_ratio) * self.N(C)) * self.muBulk
+                + self.muSurf * (C ** 2) * ((1 - C) ** 2)
+                + 2 * self.muGB * self.N(C) * sum([eta[i] ** 2 * (sum([eta[j] ** 2 for j in range(self.Np)]) - eta[i] ** 2) for i in range(self.Np)]))
+                * (grad(u) + grad(u).T))
 
     # Calculate the interface stress
     def interface_stress(self, C, eta):
-        return self.kc * outer(grad(C), grad(C)) + self.keta * self.N(C) * sum([outer(grad(eta[i]), grad(eta[i])) for i in range(self.Np)])
+        return self.kc * outer(grad(C), grad(C)) + self.keta * self.N(C) * sum(
+            [outer(grad(eta[i]), grad(eta[i])) for i in range(self.Np)])
 
 
 def particle_centers_without_template(radius_particle, particle_number_total, number_x, number_y, domain):
@@ -285,6 +327,7 @@ def signal_handler(sig, frame):
     global interrupted
     print("===== Received interrupt signal. Stopping after current iteration. =====")
     interrupted = True
+
 
 # Function to plot figures of phase-field variants *************************************************************
 def plot_function(serial_number, variant, file_directory, time_current):
@@ -543,7 +586,6 @@ domain_size = [float((particle_number_x + 2) * particle_size), float((particle_n
 ElementNumber = [int(domain_size[0] * ratio_mesh), int(domain_size[1] * ratio_mesh)]
 gamma_gb = np.sqrt(4 * b * keta / 3)
 
-
 # Obtain the particle centers and radii **********************************************************************
 particle_centers, particle_radii = particle_centers_without_template(radius_particle, Np, particle_number_x,
                                                                      particle_number_y, domain_size)
@@ -575,14 +617,25 @@ P1 = element("Lagrange", msh.basix_cell(), 1)
 C_Space = functionspace(msh, mixed_element([P1, P1]))
 Eta_Space = functionspace(msh, P1)
 
-PV = element("Lagrange",  msh.basix_cell(), 2, shape=(gdim,))
+PV = element("Lagrange", msh.basix_cell(), 2, shape=(msh.geometry.dim,))
+print(PV)
 VS = functionspace(msh, mixed_element([PV, P1]))
+# print(VS)
+# u_trial = ufl.TrialFunction(VS)
+# v_trial, p_trial = ufl.split(u_trial)
+# print(v_trial)
+# print(p_trial)
 
-PS = element("Lagrange",  msh.basix_cell(), 1, shape=(2,2))
+
+
+u_space = functionspace(msh, PV)
+p_space = functionspace(msh, P1)
+
+PS = element("Lagrange", msh.basix_cell(), 1, shape=(msh.geometry.dim, msh.geometry.dim))
 WS = functionspace(msh, PS)
 
 # Define the test and trial functions
-c_trial, mu_trial= TrialFunction(C_Space)
+c_trial, mu_trial = TrialFunction(C_Space)
 c_test, mu_test = TestFunction(C_Space)
 
 eta_trial = TrialFunction(Eta_Space)
@@ -599,15 +652,10 @@ c_new, mu_new = split(u_new)
 c_prev, mu_prev = split(u_prev)
 
 # Split the test and trial functions
-v_trial = TrialFunction(VS)
-p_trial = TrialFunction(VS)
-
-v_test = TestFunction(VS)
-p_test = TestFunction(VS)
-
+v_trial, p_trial = split(TrialFunction(VS))
+v_test, p_test = split(TestFunction(VS))
 v_combined = Function(VS)
 v, p = split(v_combined)
-
 
 # Define boundary condition ***********************************************************************************
 
@@ -622,11 +670,11 @@ v, p = split(v_combined)
 # # 在边界上找到网格平面
 facets = mesh.locate_entities_boundary(
     msh,
-    dim=(msh.topology.dim - 1), # 边界的维度，例如，对于三维网格，边界实体是二维面。
+    dim=(msh.topology.dim - 1),  # 边界的维度，例如，对于三维网格，边界实体是二维面。
     marker=lambda x: np.isclose(x[0], 0.0)
                      | np.isclose(x[0], domain_size[0])
                      | np.isclose(x[1], 0.0)
-                     | np.isclose(x[1], domain_size[1]) # 边界的标记函数，如果实体满足条件（即上述检查返回 True）
+                     | np.isclose(x[1], domain_size[1])  # 边界的标记函数，如果实体满足条件（即上述检查返回 True）
 )
 #
 dofs = locate_dofs_topological(V=VS.sub(1), entity_dim=1, entities=facets)
@@ -655,14 +703,16 @@ bc_vector = dirichletbc(value=vector_value, dofs=dofs)
 
 # Define initial value ***************************************************************************************
 # Define initial value of eta
-print(SpatialCoordinate(msh))
+print(f"SpatialCoordinate: {SpatialCoordinate(msh)}")
 
 eta_initial = []
 for k in range(pde.Np):
-    eta = VoronoiParticle(msh, center=particle_centers[k], others=particle_centers[:k] + particle_centers[k+1:], epsilon=1)
-    eta_initial.append(eta)
-
-print(eta_initial)
+    eta = VoronoiParticle(msh, center=particle_centers[k], others=particle_centers[:k] + particle_centers[k + 1:],
+                          epsilon=1)
+    eta_expr = eta.ufl_expression
+    print(f"eta_expr:{eta_expr}")
+    eta_initial.append(eta_expr)
+    print(f"eta_initial:{eta_initial}")
 # eta_initial = [VoronoiParticle(degree=1) for k in range(pde.Np)]
 # for k in range(pde.Np):
 #     eta_initial[k].others = particle_centers.copy()
@@ -670,19 +720,33 @@ print(eta_initial)
 #     eta_initial[k].epsilon = 1
 
 # Define initial value of C
+X = SpatialCoordinate(msh)
 expression_strings = [circle_string_expression(particle_radii[k], particle_centers[k], 1) for k in range(pde.Np)]
-ufl_expression = '+'.join(expression_strings)
-num_points = 1
-X = np.array([[0.0, 0.0]])
-c_initial = Expression(ufl_expression, X, comm=MPI.COMM_WORLD)
+print(expression_strings)
+# ufl_expression = '+'.join(expression_strings)
+ufl_expressions = [circle_ufl_expression(particle_radii[k], particle_centers[k], 1, X) for k in range(pde.Np)]
+combined_expression = sum(ufl_expressions)
+# print(ufl_expression)
+# num_points = 1
+# c_initial = Expression(e=ufl_expression, X=X)
+points = msh.geometry.x[:, :2]
+print(points)
+c_initial = Expression(e=combined_expression, X=points, dtype=np.float64)
+print(type(c_initial))
+mu_initial = Expression(e=circle_ufl_expression_mu(X), X=points, dtype=np.float64)
 
-# Define initial value of mu
-mu_initial = Constant(0)
+# mu_initial = Function(C_Space)
+# mu_initial.x.array[:] = 0.0
+
 
 # Interpolate the initial value to function space
-c0 = interpolate(c_initial, C_Space.sub(0).collapse())
-mu0 = interpolate(mu_initial, C_Space.sub(1).collapse())
-eta0 = [interpolate(eta_initial[k], Eta_Space) for k in range(pde.Np)]
+# u0 = Function(C_Space)
+# u0.interpolate((c_initial, mu_initial))
+# c0 = Function(C_Space.sub(0).collapse())
+# c0 = interpolate(c_initial, C_Space.sub(0).collapse())
+c0 = ufl.interpolate(combined_expression, C_Space.sub(0))
+mu0 = ufl.interpolate(circle_ufl_expression_mu(X), C_Space.sub(1))
+eta0 = [ufl.interpolate(eta_initial[k], Eta_Space) for k in range(pde.Np)]
 c_mid = (1.0 - theta) * c_prev + theta * c_trial
 
 # Define the weak form ****************************************************************************************
@@ -718,12 +782,16 @@ for k in range(pde.Np):
 eta_WeakForm_L = [lhs(eta_WeakForm[k]) for k in range(pde.Np)]
 eta_WeakForm_R = [rhs(eta_WeakForm[k]) for k in range(pde.Np)]
 
+print(type(v_trial))
 # Define the weak form of Stokes equation
 stokes_term1 = inner(pde.sigma(v_trial, c_new, eta_new), grad(v_test)) * dx
+
 stokes_term2 = div(v_test) * p_trial * dx + p_test * div(v_trial) * dx
-stokes_term3 = inner(pde.interface_stress(c_new, eta_new), grad(v_test)) * dX
+stokes_term3 = inner(pde.interface_stress(c_new, eta_new), grad(v_test)) * dx
 stokes_WeakForm = stokes_term1 + stokes_term2 - stokes_term3
 stokes_WeakForm_L, stokes_WeakForm_R = lhs(stokes_WeakForm), rhs(stokes_WeakForm)
+# stokes_WeakForm_L = lhs(stokes_WeakForm)
+# stokes_WeakForm_R = rhs(stokes_WeakForm)
 
 # Define the weak form of stress equation
 stress_test = TestFunction(WS)
@@ -732,6 +800,16 @@ stress_L = inner(stress_trial, stress_test) * dx
 stress_R_term1 = pde.sigma(v, c_new, eta_new) * p * Identity(2)
 stress_R_term2 = - (0.5 * pde.kc * dot(grad(c_new), grad(c_new)) + pde.f(c_new) + pde.N(c_new) * (
         pde.S(eta_new) + pde.grad_eta(eta_new))) * Identity(2)
+
+print(f"Type of stress_R_term1: {type(stress_R_term1)}")
+print(f"Type of stress_R_term2: {type(stress_R_term2)}")
+print(f"Type of stress_test: {type(stress_test)}")
+
+print(f"stress_R_term1: {repr(stress_R_term1)}")
+print(f"stress_R_term2: {repr(stress_R_term2)}")
+print(f"stress_test: {repr(stress_test)}")
+
+
 stress_R = inner(stress_R_term1 + stress_R_term2, stress_test) * dx
 
 # Define the weak form of data_curve
@@ -757,9 +835,9 @@ counterStep = counterStepInitial
 Time_Simulation = NumberOfTimeStep * dt
 
 # Set the output file for reprocessing and output results of initial timestep ***********************************
-xdmf_file = XDMFFile(MPI.comm_world, Output_directory + f"/solution_{counterStep:06}.xdmf")
-xdmf_file.parameters["flush_output"] = True
-xdmf_file.parameters["functions_share_mesh"] = True
+# xdmf_file = XDMFFile(MPI.COMM_WORLD, Output_directory + f"/solution_{counterStep:06}.xdmf")
+# xdmf_file.parameters["flush_output"] = True
+# xdmf_file.parameters["functions_share_mesh"] = True
 
 # Set output data for curve ***********************************************************************************
 data_curve = np.empty((NumberOfTimeStep + 1, 9))
@@ -790,15 +868,15 @@ try:
         logging.info("#################################################")
         # Phase-field parameters
         logging.info("# Phase-field parametersInput")
-        logging.info(f"Alpha: {pde.a.values()[0]}")
-        logging.info(f"Beta: {pde.b.values()[0]}")
-        logging.info(f"Kappac: {pde.kc.values()[0]}")
-        logging.info(f"KappaEta: {pde.keta.values()[0]}")
-        logging.info(f"Surface Diffusion: {pde.Dsf.values()[0]}")
-        logging.info(f"GB Diffusion: {pde.Dgb.values()[0]}")
-        logging.info(f"Volume Diffusion: {pde.Dvol.values()[0]}")
-        logging.info(f"Mobility L: {pde.L.values()[0]}")
-        logging.info(f"Epsilon: {pde.Neps.values()[0]}")
+        logging.info(f"Alpha: {pde.a}")
+        logging.info(f"Beta: {pde.b}")
+        logging.info(f"Kappac: {pde.kc}")
+        logging.info(f"KappaEta: {pde.keta}")
+        logging.info(f"Surface Diffusion: {pde.Dsf}")
+        logging.info(f"GB Diffusion: {pde.Dgb}")
+        logging.info(f"Volume Diffusion: {pde.Dvol}")
+        logging.info(f"Mobility L: {pde.L}")
+        logging.info(f"Epsilon: {pde.Neps}")
         # Mechanics Parameters
         logging.info("#################################################")
         logging.info("# Mechanics Parameters")
@@ -825,9 +903,9 @@ try:
         logging.info("# Algorithmic parameters")
         logging.info(f"theta: {theta}")
         # Normalized Materials Properties
-        energySurfSpeciNormalized = (sqrt(2 * pde.kc.values()[0] * pde.a.values()[0]) / 6)
-        thicknessSurfaceNormalized = sqrt(8 * pde.kc.values()[0] / pde.a.values()[0])
-        thicknessGbNormalized = sqrt(4 * pde.keta.values()[0] / (3 * pde.b.values()[0]))
+        energySurfSpeciNormalized = (sqrt(2 * pde.kc * pde.a) / 6)
+        thicknessSurfaceNormalized = sqrt(8 * pde.kc / pde.a)
+        thicknessGbNormalized = sqrt(4 * pde.keta / (3 * pde.b))
         logging.info("#################################################")
         logging.info("# Normalized Materials Properties")
         logging.info(f"specfic surface data_curve: {energySurfSpeciNormalized}")
@@ -867,8 +945,8 @@ try:
 
         print("----- Solving Stokes equation in of initial time step -----")
         assign(v_combined,
-               [interpolate(Constant((0, 0)), VS.sub(0).collapse()), interpolate(Constant(0), VS.sub(1).collapse())])
-        solve(stokes_WeakForm_L == stokes_WeakForm_R, v_combined, bc, solver_parameters=Stokes_params)
+               [Function.interpolate(Constant((0, 0)), VS.sub(0).collapse()), Function.interpolate(Constant(0), VS.sub(1).collapse())])
+        solve(stokes_WeakForm_L == stokes_WeakForm_R, v_combined, bc_vector, solver_parameters=Stokes_params)
 
         # Define the output parameters ********************************************************************************
 
@@ -897,14 +975,25 @@ try:
                 writer.writerow(row)
 
         print("----- Outputting results -----")
-        solve(eta_pure_L == eta_pure_R, eta_pure)
-        xdmf_file.write(eta_pure, timeCurrent)
-        xdmf_file.write(c_wr, timeCurrent)
-        solve(eta_wr_L == eta_wr_R, eta_wr)
-        xdmf_file.write(eta_wr, timeCurrent)
-        xdmf_file.write(v_wr, timeCurrent)
-        solve(stress_L == stress_R, stress_wr)
-        xdmf_file.write(stress_wr, timeCurrent)
+        # solve(eta_pure_L == eta_pure_R, eta_pure)
+        # xdmf_file.write(eta_pure, timeCurrent)
+        # xdmf_file.write(c_wr, timeCurrent)
+        # solve(eta_wr_L == eta_wr_R, eta_wr)
+        # xdmf_file.write(eta_wr, timeCurrent)
+        # xdmf_file.write(v_wr, timeCurrent)
+        # solve(stress_L == stress_R, stress_wr)
+        # xdmf_file.write(stress_wr, timeCurrent)
+
+        with XDMFFile(MPI.COMM_WORLD, Output_directory + f"/solution.xdmf", "w") as xdmf_file:
+            xdmf_file.parameters["flush_output"] = True
+            xdmf_file.parameters["functions_share_mesh"] = True
+            xdmf_file.write_mesh(msh)
+            xdmf_file.write_function(eta_pure, timeCurrent)
+            xdmf_file.write_function(c_wr, timeCurrent)
+            xdmf_file.write_function(eta_wr, timeCurrent)
+            xdmf_file.write_function(v_wr, timeCurrent)
+            xdmf_file.write_function(stress_wr, timeCurrent)
+
 
         # Save various data or initial timestep to csv file ************************************************************
         normalized_time = timeCurrent / timesCharacteristic + 1e-15
@@ -949,7 +1038,7 @@ try:
         logging.info("#################################################")
         logging.info(f"TimeStep: {dt}")
         logging.info(f"InitialTime: {timeInitial}")
-        logging.info(f"Reboot Continue: {parameters_input.get("Job For Continue")}")
+        logging.info("Reboot Continue: {}".format(parameters_input.get("Job For Continue")))
         logging.info(f"NumberOfTimeStep: {NumberOfTimeStep}")
         logging.info(f"InitialStepCounter: {counterStepInitial}")
         logging.info(f"FrequencyOutPut: {frequencyOutput}")
@@ -1088,7 +1177,6 @@ try:
         checkpoint_file.write(v_combined, "CheckPoint/v_combined")
 
         if np.mod(counterStep, frequencyOutput) == 0:
-
             print("----- Outputting results -----")
             xdmf_file.write(c_wr, timeCurrent)
             solve(eta_wr_L == eta_wr_R, eta_wr)

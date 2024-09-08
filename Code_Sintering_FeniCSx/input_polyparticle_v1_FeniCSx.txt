@@ -26,7 +26,7 @@ TimeStep = 0.5
 InitialTime = 10
 Job For Continue = PPSS-42 (July 08, 2024, 21-01-59)
 NumberOfTimeStep = 100
-InitialStepCounter = 84
+InitialStepCounter = 0
 FrequencyOutPut = 1
 
 # Algorithmic Parameters
