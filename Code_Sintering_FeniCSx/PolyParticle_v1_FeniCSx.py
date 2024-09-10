@@ -731,9 +731,11 @@ combined_expression = sum(ufl_expressions)
 # c_initial = Expression(e=ufl_expression, X=X)
 points = msh.geometry.x[:, :2]
 print(points)
-c_initial = Expression(e=combined_expression, X=points, dtype=np.float64)
-print(type(c_initial))
-mu_initial = Expression(e=circle_ufl_expression_mu(X), X=points, dtype=np.float64)
+# c_initial = Expression(e=combined_expression, X=points, dtype=np.float64)
+# print(type(c_initial))
+c_initial, mu_initial = split(Function(VS))
+# mu_initial.x.array[:] = 0.0
+# mu_initial = Expression(e=circle_ufl_expression_mu(X), X=points, dtype=np.float64)
 
 # mu_initial = Function(C_Space)
 # mu_initial.x.array[:] = 0.0
@@ -937,6 +939,7 @@ try:
 
         # 重置初始条件 ************************************************************************************************
         print(f"\nTime step: {counterStep}, Time: {timeCurrent:g}s, Time of Simulation: {Time_Simulation:g}s")
+        u_new.x.array[:] = [c0.x.array[:], mu0.x.array[:]]
         assign(u_new, [c0, mu0])
         u_prev.assign(u_new)
         for i in range(pde.Np):
@@ -945,7 +948,7 @@ try:
 
         print("----- Solving Stokes equation in of initial time step -----")
         assign(v_combined,
-               [Function.interpolate(Constant((0, 0)), VS.sub(0).collapse()), Function.interpolate(Constant(0), VS.sub(1).collapse())])
+               [ufl.interpolate(Constant((0, 0)), VS.sub(0).collapse()), ufl.interpolate(Constant(0), VS.sub(1).collapse())])
         solve(stokes_WeakForm_L == stokes_WeakForm_R, v_combined, bc_vector, solver_parameters=Stokes_params)
 
         # Define the output parameters ********************************************************************************

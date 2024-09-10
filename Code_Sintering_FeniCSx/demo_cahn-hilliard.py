@@ -136,20 +136,39 @@ from dolfinx.mesh import CellType, create_unit_square
 from dolfinx.nls.petsc import NewtonSolver
 from ufl import dx, grad, inner
 
-try:
-    import pyvista as pv
-    import pyvistaqt as pvqt
+# try:
+#     import pyvista as pv
+#     import pyvistaqt as pvqt
+#
+#     have_pyvista = True
+#     if pv.OFF_SCREEN:
+#         pv.start_xvfb(wait=0.5)
+# except ModuleNotFoundError:
+#     print("pyvista and pyvistaqt are required to visualise the solution")
+#     have_pyvista = False
 
-    have_pyvista = True
-    if pv.OFF_SCREEN:
-        pv.start_xvfb(wait=0.5)
-except ModuleNotFoundError:
-    print("pyvista and pyvistaqt are required to visualise the solution")
-    have_pyvista = False
+import logging
+import sys
+import time
+
+# 设置日志记录到文件
+start_time = time.time()
+logging.basicConfig(filename='output.log', level=logging.INFO)
+# 创建日志记录器，将输出同时发送到控制台和文件
+console_handler = logging.StreamHandler(sys.stdout)
+logging.getLogger().addHandler(console_handler)
+logging.info(f"start time: {start_time}")
+# 使用 logging 记录信息
+# logging.info("This is an info message")
 
 # Save all logging to file
 log.set_output_file("log.txt")
 # -
+
+comm = MPI.COMM_WORLD
+rank = comm.Get_rank()
+logging.info(f"Process {rank} is running")
+print(f"Process {rank} is running")
 
 # Next, various model parameters are defined:
 
@@ -163,18 +182,16 @@ theta = 0.5  # time stepping family, e.g. theta=1 -> backward Euler, theta=0.5 -
 # using a pair of linear Lagrange elements.
 
 # msh = create_unit_square(MPI.COMM_WORLD, 96, 96, CellType.triangle)
-
 msh = mesh.create_rectangle(
     comm=MPI.COMM_WORLD,
-    points=((0.0, 0.0), (2.0, 1.0)),
-    n=(32, 16),
+    points=((0, 0), (200, 150)),
+    n=(200, 150),
     cell_type=mesh.CellType.triangle,
     diagonal=cpp.mesh.DiagonalType.crossed
 )
-# P1 = element("Lagrange", msh.basix_cell(), 1)
-P1 = element("Lagrange", msh.basix_cell(), 1, shape=(msh.geometry.dim,), dtype=default_real_type)
+P1 = element("Lagrange", msh.basix_cell(), 1)
 ME = functionspace(msh, mixed_element([P1, P1]))
-print("CheckPoint 1")
+
 # Trial and test functions of the space `ME` are now defined:
 
 q, v = ufl.TestFunctions(ME)
@@ -211,9 +228,27 @@ c0, mu0 = ufl.split(u0)
 # Zero u
 u.x.array[:] = 0.0
 
+
+# Initial condition
+def ICs(center, radius, x):
+    expr = 0
+    sqrt2_inv = 1 / np.sqrt(2)
+    for c_coord in center:
+        dist = np.sqrt((x[0] - c_coord[0])**2 + (x[1] - c_coord[1])**2)
+        expr += (1 - np.tanh((dist - radius) * sqrt2_inv)) / 2
+    return expr
+
+# def ICs(center, radius, x):
+#     expr = 0
+#     for i in range(len(center)):
+#         expr += (1 - np.tanh((np.sqrt(pow((x[0] - center[i][0]), 2) + pow((x[1] - center[i][1]), 2)) - radius)
+#                              / (np.sqrt(2) * 1))) / 2
+#     return expr
+
+
 # Interpolate initial condition
 rng = np.random.default_rng(42)
-u.sub(0).interpolate(lambda x: 0.63 + 0.02 * (0.5 - rng.random(x.shape[1])))
+u.sub(0).interpolate(lambda x: ICs([[75, 75], [125, 75]], 25, x))
 u.x.scatter_forward()
 # -
 
@@ -231,7 +266,7 @@ u.x.scatter_forward()
 
 # Compute the chemical potential df/dc
 c = ufl.variable(c)
-f = 100 * c**2 * (1 - c) ** 2
+f = 100 * c ** 2 * (1 - c) ** 2
 dfdc = ufl.diff(f, c)
 
 # The first line declares that `c` is a variable that some function can
@@ -313,42 +348,45 @@ else:
 V0, dofs = ME.sub(0).collapse()
 
 # Prepare viewer for plotting the solution during the computation
-if have_pyvista:
-    # Create a VTK 'mesh' with 'nodes' at the function dofs
-    topology, cell_types, x = plot.vtk_mesh(V0)
-    grid = pv.UnstructuredGrid(topology, cell_types, x)
-
-    # Set output data
-    grid.point_data["c"] = u.x.array[dofs].real
-    grid.set_active_scalars("c")
-
-    p = pvqt.BackgroundPlotter(title="concentration", auto_update=True)
-    p.add_mesh(grid, clim=[0, 1])
-    p.view_xy(True)
-    p.add_text(f"time: {t}", font_size=12, name="timelabel")
+# if have_pyvista:
+#     # Create a VTK 'mesh' with 'nodes' at the function dofs
+#     topology, cell_types, x = plot.vtk_mesh(V0)
+#     grid = pv.UnstructuredGrid(topology, cell_types, x)
+#
+#     # Set output data
+#     grid.point_data["c"] = u.x.array[dofs].real
+#     grid.set_active_scalars("c")
+#
+#     p = pvqt.BackgroundPlotter(title="concentration", auto_update=True)
+#     p.add_mesh(grid, clim=[0, 1])
+#     p.view_xy(True)
+#     p.add_text(f"time: {t}", font_size=12, name="timelabel")
 
 c = u.sub(0)
 u0.x.array[:] = u.x.array
 while t < T:
     t += dt
     r = solver.solve(u)
-    print(f"Step {int(t / dt)}: num iterations: {r[0]}")
+    logging.info(f"Step {int(t / dt)}: num iterations: {r[0]}")
+    # print(f"Step {int(t / dt)}: num iterations: {r[0]}")
     u0.x.array[:] = u.x.array
     file.write_function(c, t)
 
     # Update the plot window
-    if have_pyvista:
-        p.add_text(f"time: {t:.2e}", font_size=12, name="timelabel")
-        grid.point_data["c"] = u.x.array[dofs].real
-        p.app.processEvents()
+    # if have_pyvista:
+    #     p.add_text(f"time: {t:.2e}", font_size=12, name="timelabel")
+    #     grid.point_data["c"] = u.x.array[dofs].real
+    #     p.app.processEvents()
 
 file.close()
-
+end_time = time.strftime("%Y-%m-%d-%H-%M-%S", time.localtime())
+logging.info(f"Process {rank} finished at {end_time}")
+logging.info(f"Total time: {time.time() - start_time}")
 # Update ghost entries and plot
-if have_pyvista:
-    u.x.scatter_forward()
-    grid.point_data["c"] = u.x.array[dofs].real
-    screenshot = None
-    if pv.OFF_SCREEN:
-        screenshot = "c.png"
-    pv.plot(grid, show_edges=True, screenshot=screenshot)
+# if have_pyvista:
+#     u.x.scatter_forward()
+#     grid.point_data["c"] = u.x.array[dofs].real
+#     screenshot = None
+#     if pv.OFF_SCREEN:
+#         screenshot = "c.png"
+#     pv.plot(grid, show_edges=True, screenshot=screenshot)

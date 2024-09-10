@@ -1,6 +1,390 @@
-arguments: /mnt/d/OneDrive/Science_Research/2.Secondstage_CodeAndData_Python/Code_Python/FeniCSx/demo_cahn-hilliard.py
-Current dir: /mnt/d/OneDrive/Science_Research/2.Secondstage_CodeAndData_Python/Code_Python/FeniCSx
+arguments: /mnt/d/OneDrive/Science_Research/2.Secondstage_CodeAndData_Python/Code_Python/Code_Sintering_FeniCSx/demo_cahn-hilliard.py
+Current dir: /mnt/d/OneDrive/Science_Research/2.Secondstage_CodeAndData_Python/Code_Python/Code_Sintering_FeniCSx
 File verbosity level: 0
 date       time         ( uptime  ) [ thread name/id ]                   file:line     v| 
-2024-07-09 20:19:10.365 (   0.393s) [main            ]             loguru.cpp:826   INFO| Logging to 'log.txt', mode: 'w', verbosity: 0
-2024-07-09 20:19:10.563 (   0.592s) [main            ]             loguru.cpp:526   INFO| atexit
+2024-09-10 12:13:41.885 (   0.020s) [main            ]             loguru.cpp:826   INFO| Logging to 'log.txt', mode: 'w', verbosity: 0
+2024-09-10 12:13:41.890 (   0.026s) [main            ]         graphbuild.cpp:356   INFO| Build local part of mesh dual graph
+2024-09-10 12:13:41.932 (   0.067s) [main            ]           ordering.cpp:204   INFO| GPS pseudo-diameter:(749) 1-119998
+2024-09-10 12:13:41.941 (   0.077s) [main            ]           Topology.cpp:1330  INFO| Create topology (single cell type)
+2024-09-10 12:13:41.942 (   0.077s) [main            ]           Topology.cpp:1044  INFO| Create topology (generalised)
+2024-09-10 12:13:41.945 (   0.081s) [main            ]                MPI.cpp:164   INFO| Computing communication graph edges (using NBX algorithm). Number of input edges: 1
+2024-09-10 12:13:41.946 (   0.081s) [main            ]                MPI.cpp:235   INFO| Finished graph edge discovery using NBX algorithm. Number of discovered edges 1
+2024-09-10 12:13:41.968 (   0.104s) [main            ]          partition.cpp:233   INFO| Compute ghost indices
+2024-09-10 12:13:41.969 (   0.104s) [main            ]                MPI.cpp:97    INFO| Computing communication graph edges (using PCX algorithm). Number of input edges: 0
+2024-09-10 12:13:41.969 (   0.105s) [main            ]                MPI.cpp:154   INFO| Finished graph edge discovery using PCX algorithm. Number of discovered edges 0
+2024-09-10 12:13:42.000 (   0.136s) [main            ]                MPI.cpp:164   INFO| Computing communication graph edges (using NBX algorithm). Number of input edges: 0
+2024-09-10 12:13:42.000 (   0.136s) [main            ]                MPI.cpp:235   INFO| Finished graph edge discovery using NBX algorithm. Number of discovered edges 0
+2024-09-10 12:13:42.005 (   0.141s) [main            ]                MPI.cpp:164   INFO| Computing communication graph edges (using NBX algorithm). Number of input edges: 0
+2024-09-10 12:13:42.006 (   0.141s) [main            ]                MPI.cpp:235   INFO| Finished graph edge discovery using NBX algorithm. Number of discovered edges 0
+2024-09-10 12:13:42.006 (   0.141s) [main            ]                  MPI.h:377   INFO| Number of neighbourhood source ranks in distribute_to_postoffice: 0
+2024-09-10 12:13:42.006 (   0.142s) [main            ]                MPI.cpp:164   INFO| Computing communication graph edges (using NBX algorithm). Number of input edges: 0
+2024-09-10 12:13:42.007 (   0.142s) [main            ]                MPI.cpp:235   INFO| Finished graph edge discovery using NBX algorithm. Number of discovered edges 0
+2024-09-10 12:13:42.007 (   0.142s) [main            ]                  MPI.h:518   INFO| Neighbourhood destination ranks from post office in distribute_data (rank, num dests, num dests/mpi_size): 0, 0, 0
+2024-09-10 12:13:42.007 (   0.143s) [main            ]      dofmapbuilder.cpp:166   INFO| Checking required entities per dimension
+2024-09-10 12:13:42.007 (   0.143s) [main            ]      dofmapbuilder.cpp:264   INFO| Cell type:0, dofmap:120000x3
+2024-09-10 12:13:42.014 (   0.149s) [main            ]      dofmapbuilder.cpp:320   INFO| Global index computation
+2024-09-10 12:13:42.014 (   0.150s) [main            ]      dofmapbuilder.cpp:637   INFO| Got 1 index_maps
+2024-09-10 12:13:42.015 (   0.150s) [main            ]      dofmapbuilder.cpp:644   INFO| Get global indices
+2024-09-10 12:13:42.028 (   0.164s) [main            ]      dofmapbuilder.cpp:166   INFO| Checking required entities per dimension
+2024-09-10 12:13:42.029 (   0.164s) [main            ]      dofmapbuilder.cpp:264   INFO| Cell type:0, dofmap:120000x6
+2024-09-10 12:13:42.035 (   0.171s) [main            ]      dofmapbuilder.cpp:320   INFO| Global index computation
+2024-09-10 12:13:42.036 (   0.172s) [main            ]      dofmapbuilder.cpp:637   INFO| Got 1 index_maps
+2024-09-10 12:13:42.038 (   0.173s) [main            ]      dofmapbuilder.cpp:644   INFO| Get global indices
+2024-09-10 12:13:42.114 (   0.250s) [main            ]    SparsityPattern.cpp:385   INFO| Column ghost size increased from 0 to 0
+2024-09-10 12:13:42.123 (   0.259s) [main            ]           XDMFFile.cpp:48    INFO| Opened HDF5 file with id "72057594037927936"
+2024-09-10 12:13:42.123 (   0.259s) [main            ]          xdmf_mesh.cpp:217   INFO| Adding mesh to node "/Xdmf/Domain"
+2024-09-10 12:13:42.123 (   0.259s) [main            ]          xdmf_mesh.cpp:29    INFO| Adding topology data to node "/Xdmf/Domain/Grid"
+2024-09-10 12:13:42.138 (   0.273s) [main            ]          xdmf_mesh.cpp:164   INFO| Adding geometry data to node "/Xdmf/Domain/Grid"
+2024-09-10 12:13:42.150 (   0.286s) [main            ]                MPI.cpp:164   INFO| Computing communication graph edges (using NBX algorithm). Number of input edges: 0
+2024-09-10 12:13:42.151 (   0.286s) [main            ]                MPI.cpp:235   INFO| Finished graph edge discovery using NBX algorithm. Number of discovered edges 0
+2024-09-10 12:13:42.289 (   0.424s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:43.760 (   1.895s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:44.619 (   2.754s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.000284125 (tol = 1e-10) r (rel) = 3.58086e-07(tol = 1.49012e-10)
+2024-09-10 12:13:44.717 (   2.852s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:45.614 (   3.750s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.15203e-13 (tol = 1e-10) r (rel) = 1.45191e-16(tol = 1.49012e-10)
+2024-09-10 12:13:45.614 (   3.750s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:13:45.615 (   3.750s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:13:45.736 (   3.871s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:46.662 (   4.797s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:47.543 (   5.679s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00114217 (tol = 1e-10) r (rel) = 0.00116258(tol = 1.49012e-10)
+2024-09-10 12:13:47.658 (   5.793s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:48.580 (   6.716s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.26372e-13 (tol = 1e-10) r (rel) = 1.28631e-13(tol = 1.49012e-10)
+2024-09-10 12:13:48.581 (   6.716s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:13:48.581 (   6.717s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:13:48.701 (   6.836s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:49.654 (   7.790s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:50.505 (   8.641s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00115301 (tol = 1e-10) r (rel) = 0.0011817(tol = 1.49012e-10)
+2024-09-10 12:13:50.603 (   8.738s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:51.502 (   9.638s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.25361e-13 (tol = 1e-10) r (rel) = 1.2848e-13(tol = 1.49012e-10)
+2024-09-10 12:13:51.503 (   9.638s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:13:51.503 (   9.639s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:13:51.626 (   9.761s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:52.584 (  10.719s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:53.454 (  11.590s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00116422 (tol = 1e-10) r (rel) = 0.00120018(tol = 1.49012e-10)
+2024-09-10 12:13:53.559 (  11.695s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:54.500 (  12.636s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.23794e-13 (tol = 1e-10) r (rel) = 1.27618e-13(tol = 1.49012e-10)
+2024-09-10 12:13:54.500 (  12.636s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:13:54.501 (  12.637s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:13:54.634 (  12.770s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:55.644 (  13.779s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:56.577 (  14.713s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00117578 (tol = 1e-10) r (rel) = 0.00121804(tol = 1.49012e-10)
+2024-09-10 12:13:56.674 (  14.809s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:13:57.587 (  15.723s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.24332e-13 (tol = 1e-10) r (rel) = 1.28801e-13(tol = 1.49012e-10)
+2024-09-10 12:13:57.587 (  15.723s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:13:57.588 (  15.723s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:13:57.706 (  15.842s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:00.835 (  16.895s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:01.857 (  17.917s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00118769 (tol = 1e-10) r (rel) = 0.00123531(tol = 1.49012e-10)
+2024-09-10 12:14:01.962 (  18.022s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:02.955 (  19.015s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.30276e-13 (tol = 1e-10) r (rel) = 1.355e-13(tol = 1.49012e-10)
+2024-09-10 12:14:02.956 (  19.015s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:02.956 (  19.016s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:03.084 (  19.143s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:04.149 (  20.209s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:05.154 (  21.213s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00119994 (tol = 1e-10) r (rel) = 0.00125203(tol = 1.49012e-10)
+2024-09-10 12:14:05.261 (  21.321s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:06.192 (  22.251s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.27915e-13 (tol = 1e-10) r (rel) = 1.33468e-13(tol = 1.49012e-10)
+2024-09-10 12:14:06.192 (  22.252s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:06.193 (  22.252s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:06.325 (  22.385s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:07.351 (  23.411s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:08.216 (  24.276s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00121253 (tol = 1e-10) r (rel) = 0.00126823(tol = 1.49012e-10)
+2024-09-10 12:14:08.318 (  24.378s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:09.221 (  25.281s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.29245e-13 (tol = 1e-10) r (rel) = 1.35182e-13(tol = 1.49012e-10)
+2024-09-10 12:14:09.221 (  25.281s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:09.222 (  25.282s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:09.348 (  25.408s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:10.306 (  26.366s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:11.256 (  27.316s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00122546 (tol = 1e-10) r (rel) = 0.00128394(tol = 1.49012e-10)
+2024-09-10 12:14:11.356 (  27.415s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:12.240 (  28.300s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.30916e-13 (tol = 1e-10) r (rel) = 1.37164e-13(tol = 1.49012e-10)
+2024-09-10 12:14:12.241 (  28.300s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:12.241 (  28.301s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:12.359 (  28.419s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:13.319 (  29.378s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:14.149 (  30.208s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00123873 (tol = 1e-10) r (rel) = 0.00129922(tol = 1.49012e-10)
+2024-09-10 12:14:14.246 (  30.306s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:15.098 (  31.158s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.29407e-13 (tol = 1e-10) r (rel) = 1.35726e-13(tol = 1.49012e-10)
+2024-09-10 12:14:15.099 (  31.158s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:15.099 (  31.159s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:15.219 (  31.278s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:16.186 (  32.246s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:16.991 (  33.051s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00125234 (tol = 1e-10) r (rel) = 0.00131409(tol = 1.49012e-10)
+2024-09-10 12:14:17.088 (  33.148s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:17.953 (  34.012s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.27271e-13 (tol = 1e-10) r (rel) = 1.33546e-13(tol = 1.49012e-10)
+2024-09-10 12:14:17.953 (  34.013s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:17.953 (  34.013s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:18.071 (  34.130s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:19.094 (  35.153s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:19.983 (  36.043s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00126629 (tol = 1e-10) r (rel) = 0.0013286(tol = 1.49012e-10)
+2024-09-10 12:14:20.082 (  36.141s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:20.945 (  37.005s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.31679e-13 (tol = 1e-10) r (rel) = 1.38158e-13(tol = 1.49012e-10)
+2024-09-10 12:14:20.946 (  37.005s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:20.946 (  37.006s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:21.064 (  37.123s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:22.168 (  38.228s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:23.057 (  39.117s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00128059 (tol = 1e-10) r (rel) = 0.00134278(tol = 1.49012e-10)
+2024-09-10 12:14:23.156 (  39.216s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:23.972 (  40.032s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.27524e-13 (tol = 1e-10) r (rel) = 1.33717e-13(tol = 1.49012e-10)
+2024-09-10 12:14:23.972 (  40.032s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:23.973 (  40.032s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:24.103 (  40.162s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:25.089 (  41.149s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:25.914 (  41.973s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00129523 (tol = 1e-10) r (rel) = 0.00135667(tol = 1.49012e-10)
+2024-09-10 12:14:26.010 (  42.070s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:26.876 (  42.936s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.3156e-13 (tol = 1e-10) r (rel) = 1.378e-13(tol = 1.49012e-10)
+2024-09-10 12:14:26.876 (  42.936s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:26.877 (  42.937s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:26.996 (  43.056s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:27.991 (  44.051s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:29.076 (  45.136s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00131023 (tol = 1e-10) r (rel) = 0.0013703(tol = 1.49012e-10)
+2024-09-10 12:14:29.189 (  45.249s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:30.234 (  46.294s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.27439e-13 (tol = 1e-10) r (rel) = 1.33282e-13(tol = 1.49012e-10)
+2024-09-10 12:14:30.234 (  46.294s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:30.235 (  46.295s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:30.374 (  46.434s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:31.469 (  47.529s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:34.478 (  48.461s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00132559 (tol = 1e-10) r (rel) = 0.00138372(tol = 1.49012e-10)
+2024-09-10 12:14:34.575 (  48.559s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:35.606 (  49.589s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.35737e-13 (tol = 1e-10) r (rel) = 1.41688e-13(tol = 1.49012e-10)
+2024-09-10 12:14:35.606 (  49.589s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:35.607 (  49.590s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:35.737 (  49.720s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:36.780 (  50.763s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:37.770 (  51.753s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00134132 (tol = 1e-10) r (rel) = 0.00139694(tol = 1.49012e-10)
+2024-09-10 12:14:37.875 (  51.859s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:38.797 (  52.780s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.32005e-13 (tol = 1e-10) r (rel) = 1.3748e-13(tol = 1.49012e-10)
+2024-09-10 12:14:38.797 (  52.781s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:38.798 (  52.781s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:38.931 (  52.914s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:39.989 (  53.973s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:40.932 (  54.916s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00135741 (tol = 1e-10) r (rel) = 0.00141001(tol = 1.49012e-10)
+2024-09-10 12:14:41.030 (  55.013s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:41.927 (  55.910s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.32007e-13 (tol = 1e-10) r (rel) = 1.37123e-13(tol = 1.49012e-10)
+2024-09-10 12:14:41.927 (  55.910s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:41.927 (  55.911s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:42.045 (  56.028s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:42.979 (  56.962s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:43.932 (  57.915s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00137389 (tol = 1e-10) r (rel) = 0.00142296(tol = 1.49012e-10)
+2024-09-10 12:14:44.030 (  58.013s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:44.923 (  58.907s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.31797e-13 (tol = 1e-10) r (rel) = 1.36504e-13(tol = 1.49012e-10)
+2024-09-10 12:14:44.923 (  58.907s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:44.924 (  58.907s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:45.041 (  59.025s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:45.999 (  59.982s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:46.896 (  60.880s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00139076 (tol = 1e-10) r (rel) = 0.00143581(tol = 1.49012e-10)
+2024-09-10 12:14:46.995 (  60.978s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:47.847 (  61.831s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.35635e-13 (tol = 1e-10) r (rel) = 1.40028e-13(tol = 1.49012e-10)
+2024-09-10 12:14:47.847 (  61.831s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:47.848 (  61.831s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:47.968 (  61.951s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:48.906 (  62.889s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:49.779 (  63.762s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00140803 (tol = 1e-10) r (rel) = 0.00144859(tol = 1.49012e-10)
+2024-09-10 12:14:49.884 (  63.867s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:50.786 (  64.769s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.35755e-13 (tol = 1e-10) r (rel) = 1.39666e-13(tol = 1.49012e-10)
+2024-09-10 12:14:50.786 (  64.770s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:50.787 (  64.770s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:50.907 (  64.890s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:51.851 (  65.834s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:52.770 (  66.753s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.0014257 (tol = 1e-10) r (rel) = 0.00146133(tol = 1.49012e-10)
+2024-09-10 12:14:52.866 (  66.850s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:53.747 (  67.731s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.38001e-13 (tol = 1e-10) r (rel) = 1.4145e-13(tol = 1.49012e-10)
+2024-09-10 12:14:53.748 (  67.731s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:53.748 (  67.731s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:53.867 (  67.850s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:54.978 (  68.962s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:55.864 (  69.848s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00144379 (tol = 1e-10) r (rel) = 0.00147404(tol = 1.49012e-10)
+2024-09-10 12:14:55.965 (  69.948s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:56.895 (  70.878s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.3973e-13 (tol = 1e-10) r (rel) = 1.42658e-13(tol = 1.49012e-10)
+2024-09-10 12:14:56.895 (  70.878s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:56.895 (  70.879s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:57.015 (  70.998s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:57.986 (  71.969s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:58.852 (  72.835s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00146231 (tol = 1e-10) r (rel) = 0.00148676(tol = 1.49012e-10)
+2024-09-10 12:14:58.954 (  72.937s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:14:59.853 (  73.836s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.41075e-13 (tol = 1e-10) r (rel) = 1.43434e-13(tol = 1.49012e-10)
+2024-09-10 12:14:59.853 (  73.836s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:14:59.853 (  73.837s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:14:59.980 (  73.964s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:00.957 (  74.940s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:01.873 (  75.856s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00148126 (tol = 1e-10) r (rel) = 0.0014995(tol = 1.49012e-10)
+2024-09-10 12:15:01.980 (  75.964s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:02.917 (  76.900s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.41174e-13 (tol = 1e-10) r (rel) = 1.42912e-13(tol = 1.49012e-10)
+2024-09-10 12:15:02.917 (  76.901s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:02.918 (  76.901s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:03.065 (  77.048s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:04.135 (  78.118s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:05.155 (  79.138s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00150067 (tol = 1e-10) r (rel) = 0.00151229(tol = 1.49012e-10)
+2024-09-10 12:15:05.253 (  79.236s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:06.138 (  80.121s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.40889e-13 (tol = 1e-10) r (rel) = 1.4198e-13(tol = 1.49012e-10)
+2024-09-10 12:15:06.138 (  80.121s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:06.138 (  80.122s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:06.265 (  80.248s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:09.385 (  81.300s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:10.409 (  82.324s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00152053 (tol = 1e-10) r (rel) = 0.00152514(tol = 1.49012e-10)
+2024-09-10 12:15:10.517 (  82.432s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:11.494 (  83.409s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.40448e-13 (tol = 1e-10) r (rel) = 1.40873e-13(tol = 1.49012e-10)
+2024-09-10 12:15:11.494 (  83.409s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:11.494 (  83.409s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:11.627 (  83.542s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:12.724 (  84.639s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:13.640 (  85.555s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00154088 (tol = 1e-10) r (rel) = 0.00153807(tol = 1.49012e-10)
+2024-09-10 12:15:13.750 (  85.665s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:14.719 (  86.634s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.46513e-13 (tol = 1e-10) r (rel) = 1.46246e-13(tol = 1.49012e-10)
+2024-09-10 12:15:14.719 (  86.634s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:14.719 (  86.635s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:14.841 (  86.756s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:15.769 (  87.684s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:16.673 (  88.588s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00156171 (tol = 1e-10) r (rel) = 0.00155111(tol = 1.49012e-10)
+2024-09-10 12:15:16.774 (  88.689s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:17.715 (  89.631s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.42898e-13 (tol = 1e-10) r (rel) = 1.41929e-13(tol = 1.49012e-10)
+2024-09-10 12:15:17.716 (  89.631s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:17.716 (  89.631s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:17.834 (  89.749s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:18.823 (  90.738s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:19.713 (  91.628s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00158304 (tol = 1e-10) r (rel) = 0.00156426(tol = 1.49012e-10)
+2024-09-10 12:15:19.812 (  91.727s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:20.707 (  92.622s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.45419e-13 (tol = 1e-10) r (rel) = 1.43695e-13(tol = 1.49012e-10)
+2024-09-10 12:15:20.707 (  92.622s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:20.708 (  92.623s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:20.827 (  92.742s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:21.811 (  93.726s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:22.669 (  94.584s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00160488 (tol = 1e-10) r (rel) = 0.00157755(tol = 1.49012e-10)
+2024-09-10 12:15:22.778 (  94.693s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:23.619 (  95.534s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.49634e-13 (tol = 1e-10) r (rel) = 1.47085e-13(tol = 1.49012e-10)
+2024-09-10 12:15:23.619 (  95.534s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:23.620 (  95.535s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:23.746 (  95.661s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:24.678 (  96.593s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:25.614 (  97.529s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00162726 (tol = 1e-10) r (rel) = 0.00159098(tol = 1.49012e-10)
+2024-09-10 12:15:25.712 (  97.627s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:26.554 (  98.469s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.49947e-13 (tol = 1e-10) r (rel) = 1.46604e-13(tol = 1.49012e-10)
+2024-09-10 12:15:26.555 (  98.470s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:26.555 (  98.470s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:26.674 (  98.589s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:27.688 (  99.603s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:28.560 ( 100.475s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00165018 (tol = 1e-10) r (rel) = 0.00160458(tol = 1.49012e-10)
+2024-09-10 12:15:28.660 ( 100.575s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:29.581 ( 101.496s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.53539e-13 (tol = 1e-10) r (rel) = 1.49297e-13(tol = 1.49012e-10)
+2024-09-10 12:15:29.581 ( 101.496s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:29.581 ( 101.496s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:29.700 ( 101.615s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:30.680 ( 102.595s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:31.542 ( 103.457s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00167366 (tol = 1e-10) r (rel) = 0.00161837(tol = 1.49012e-10)
+2024-09-10 12:15:31.643 ( 103.559s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:32.615 ( 104.530s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.5417e-13 (tol = 1e-10) r (rel) = 1.49076e-13(tol = 1.49012e-10)
+2024-09-10 12:15:32.615 ( 104.530s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:32.616 ( 104.531s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:32.746 ( 104.661s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:33.838 ( 105.753s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:34.727 ( 106.642s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00169772 (tol = 1e-10) r (rel) = 0.00163234(tol = 1.49012e-10)
+2024-09-10 12:15:34.830 ( 106.745s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:35.773 ( 107.688s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.55943e-13 (tol = 1e-10) r (rel) = 1.49937e-13(tol = 1.49012e-10)
+2024-09-10 12:15:35.774 ( 107.689s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:35.774 ( 107.689s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:35.903 ( 107.818s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:36.864 ( 108.779s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:37.789 ( 109.704s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00172238 (tol = 1e-10) r (rel) = 0.00164652(tol = 1.49012e-10)
+2024-09-10 12:15:37.901 ( 109.816s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:38.913 ( 110.828s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.59857e-13 (tol = 1e-10) r (rel) = 1.52816e-13(tol = 1.49012e-10)
+2024-09-10 12:15:38.913 ( 110.828s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:38.914 ( 110.829s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:39.038 ( 110.953s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:40.032 ( 111.947s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:41.014 ( 112.929s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00174765 (tol = 1e-10) r (rel) = 0.00166093(tol = 1.49012e-10)
+2024-09-10 12:15:41.118 ( 113.033s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:44.135 ( 113.947s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.63208e-13 (tol = 1e-10) r (rel) = 1.55109e-13(tol = 1.49012e-10)
+2024-09-10 12:15:44.135 ( 113.948s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:44.136 ( 113.948s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:44.266 ( 114.078s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:45.382 ( 115.194s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:46.446 ( 116.259s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00177355 (tol = 1e-10) r (rel) = 0.00167556(tol = 1.49012e-10)
+2024-09-10 12:15:46.554 ( 116.366s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:47.568 ( 117.381s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.64549e-13 (tol = 1e-10) r (rel) = 1.55459e-13(tol = 1.49012e-10)
+2024-09-10 12:15:47.568 ( 117.381s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:47.569 ( 117.382s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:47.699 ( 117.512s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:48.773 ( 118.585s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:49.685 ( 119.497s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.0018001 (tol = 1e-10) r (rel) = 0.00169045(tol = 1.49012e-10)
+2024-09-10 12:15:49.784 ( 119.597s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:50.739 ( 120.552s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.63126e-13 (tol = 1e-10) r (rel) = 1.5319e-13(tol = 1.49012e-10)
+2024-09-10 12:15:50.739 ( 120.552s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:50.740 ( 120.553s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:50.862 ( 120.675s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:51.869 ( 121.681s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:52.717 ( 122.529s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00182732 (tol = 1e-10) r (rel) = 0.00170559(tol = 1.49012e-10)
+2024-09-10 12:15:52.822 ( 122.634s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:53.757 ( 123.569s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.74501e-13 (tol = 1e-10) r (rel) = 1.62877e-13(tol = 1.49012e-10)
+2024-09-10 12:15:53.757 ( 123.569s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:53.757 ( 123.570s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:53.878 ( 123.690s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:54.794 ( 124.606s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:55.730 ( 125.542s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00185523 (tol = 1e-10) r (rel) = 0.00172101(tol = 1.49012e-10)
+2024-09-10 12:15:55.827 ( 125.640s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:56.737 ( 126.549s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.76609e-13 (tol = 1e-10) r (rel) = 1.63832e-13(tol = 1.49012e-10)
+2024-09-10 12:15:56.737 ( 126.550s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:56.738 ( 126.550s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:56.857 ( 126.670s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:57.904 ( 127.716s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:58.775 ( 128.588s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00188386 (tol = 1e-10) r (rel) = 0.00173672(tol = 1.49012e-10)
+2024-09-10 12:15:58.874 ( 128.686s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:15:59.736 ( 129.548s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.80364e-13 (tol = 1e-10) r (rel) = 1.66276e-13(tol = 1.49012e-10)
+2024-09-10 12:15:59.736 ( 129.549s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:15:59.737 ( 129.549s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:15:59.865 ( 129.678s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:00.944 ( 130.756s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:01.943 ( 131.755s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00191322 (tol = 1e-10) r (rel) = 0.00175272(tol = 1.49012e-10)
+2024-09-10 12:16:02.049 ( 131.861s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:03.052 ( 132.864s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.79504e-13 (tol = 1e-10) r (rel) = 1.64445e-13(tol = 1.49012e-10)
+2024-09-10 12:16:03.052 ( 132.864s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:16:03.053 ( 132.865s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:16:03.177 ( 132.990s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:04.323 ( 134.136s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:05.283 ( 135.095s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00194334 (tol = 1e-10) r (rel) = 0.00176903(tol = 1.49012e-10)
+2024-09-10 12:16:05.381 ( 135.193s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:06.266 ( 136.079s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.82007e-13 (tol = 1e-10) r (rel) = 1.65682e-13(tol = 1.49012e-10)
+2024-09-10 12:16:06.267 ( 136.079s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:16:06.267 ( 136.080s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:16:06.388 ( 136.201s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:07.331 ( 137.144s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:08.189 ( 138.001s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00197424 (tol = 1e-10) r (rel) = 0.00178567(tol = 1.49012e-10)
+2024-09-10 12:16:08.293 ( 138.106s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:09.280 ( 139.092s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.91673e-13 (tol = 1e-10) r (rel) = 1.73365e-13(tol = 1.49012e-10)
+2024-09-10 12:16:09.280 ( 139.093s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:16:09.281 ( 139.093s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:16:09.409 ( 139.221s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:10.441 ( 140.254s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:11.514 ( 141.326s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00200595 (tol = 1e-10) r (rel) = 0.00180264(tol = 1.49012e-10)
+2024-09-10 12:16:11.621 ( 141.434s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:12.534 ( 142.347s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.97325e-13 (tol = 1e-10) r (rel) = 1.77326e-13(tol = 1.49012e-10)
+2024-09-10 12:16:12.535 ( 142.347s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:16:12.535 ( 142.348s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:16:12.666 ( 142.478s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:13.762 ( 143.575s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:14.704 ( 144.517s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00203849 (tol = 1e-10) r (rel) = 0.00181997(tol = 1.49012e-10)
+2024-09-10 12:16:14.807 ( 144.619s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:17.852 ( 145.597s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 1.99178e-13 (tol = 1e-10) r (rel) = 1.77826e-13(tol = 1.49012e-10)
+2024-09-10 12:16:17.852 ( 145.598s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:16:17.853 ( 145.598s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:16:17.979 ( 145.725s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:19.034 ( 146.780s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:20.000 ( 147.746s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00207189 (tol = 1e-10) r (rel) = 0.00183765(tol = 1.49012e-10)
+2024-09-10 12:16:20.105 ( 147.850s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:21.029 ( 148.774s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 2.0027e-13 (tol = 1e-10) r (rel) = 1.77628e-13(tol = 1.49012e-10)
+2024-09-10 12:16:21.029 ( 148.775s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:16:21.030 ( 148.775s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:16:21.161 ( 148.906s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:22.249 ( 149.995s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:23.171 ( 150.916s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00210618 (tol = 1e-10) r (rel) = 0.00185571(tol = 1.49012e-10)
+2024-09-10 12:16:23.274 ( 151.020s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:24.162 ( 151.908s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 2.15352e-13 (tol = 1e-10) r (rel) = 1.89742e-13(tol = 1.49012e-10)
+2024-09-10 12:16:24.163 ( 151.908s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:16:24.163 ( 151.909s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:16:24.290 ( 152.036s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:25.247 ( 152.992s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:26.142 ( 153.887s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 2: r (abs) = 0.00214138 (tol = 1e-10) r (rel) = 0.00187416(tol = 1.49012e-10)
+2024-09-10 12:16:26.241 ( 153.987s) [main            ]              petsc.cpp:700   INFO| PETSc Krylov solver starting to solve system.
+2024-09-10 12:16:27.108 ( 154.854s) [main            ]       NewtonSolver.cpp:38    INFO| Newton iteration 3: r (abs) = 2.26509e-13 (tol = 1e-10) r (rel) = 1.98244e-13(tol = 1.49012e-10)
+2024-09-10 12:16:27.108 ( 154.854s) [main            ]       NewtonSolver.cpp:252   INFO| Newton solver finished in 3 iterations and 3 linear solver iterations.
+2024-09-10 12:16:27.109 ( 154.854s) [main            ]      xdmf_function.cpp:50    INFO| Adding function to node "/Xdmf/Domain/Grid/Grid"
+2024-09-10 12:16:27.170 ( 154.915s) [main            ]             loguru.cpp:526   INFO| atexit

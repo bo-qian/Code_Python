@@ -20,13 +20,13 @@ Viscosity Ratio = 0.0001
 Particle Radius = 25
 Characteristic Time = 7200
 MeshRatio = 1
-ParticleNumberOfX = 5
+ParticleNumberOfX = 2
 ParticleNumberOfY = 1
 TimeStep = 0.5
 Job For Continue = None
 NumberOfTimeStep = 100000
 InitialStepCounter = 0
-FrequencyOutPut = 50
+FrequencyOutPut = 5
 
 # Algorithmic Parameters
 theta = 0.5
